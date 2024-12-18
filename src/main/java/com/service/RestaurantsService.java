@@ -1,4 +1,3 @@
-Service
 package com.service;
  
 import java.util.List;
@@ -7,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
  
-import com.dao.RestaurantsDAO;
+import com.DAO.RestaurantsDAO;
 import com.model.Restaurants;
  
 @Service
@@ -32,9 +31,9 @@ public class RestaurantsService {
         Optional<Restaurants> existingRestaurant = restaurantsDAO.findById(id);
         if (existingRestaurant.isPresent()) {
             Restaurants updatedRestaurant = existingRestaurant.get();
-            updatedRestaurant.setName(restaurant.getName());
-            updatedRestaurant.setLocation(restaurant.getLocation());
-            updatedRestaurant.setDescription(restaurant.getDescription());
+            updatedRestaurant.setRestaurantName(restaurant.getRestaurantName());
+            updatedRestaurant.setRestaurantAddress(restaurant.getRestaurantAddress());
+            updatedRestaurant.setRestaurantPhone(restaurant.getRestaurantPhone());
             restaurantsDAO.save(updatedRestaurant);
         }
     }
@@ -43,5 +42,3 @@ public class RestaurantsService {
         restaurantsDAO.deleteById(id);
     }
 }
- 
- 
