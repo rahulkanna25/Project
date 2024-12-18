@@ -40,7 +40,7 @@ public class Orders {
     /** Many-to-One: DeliveryDriver */
     @ManyToOne
     @JoinColumn(name = "delivery_driver_id")
-    private DeliveryDriver deliveryDriver;
+    private DeliveryDrivers deliveryDriver;
 
     /** One-to-Many: OrderItems */
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
