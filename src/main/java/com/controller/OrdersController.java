@@ -2,12 +2,11 @@ package com.controller;
 
 import com.model.Orders;
 import com.service.OrdersService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -16,60 +15,40 @@ public class OrdersController {
     @Autowired
     private OrdersService ordersService;
 
-    // Place a new order
     @PostMapping
-    public ResponseEntity<Object> placeOrder(@RequestBody Orders order) {
-        try {
-            ordersService.add(order);
-            return ResponseEntity.ok("{\"code\": \"ORDERSUCCESS\", \"message\": \"Order placed successfully\"}");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("{\"code\": \"ORDERFAIL\", \"message\": \"Error placing the order\"}");
-        }
+    public ResponseEntity<String> placeOrder(@RequestBody Orders order) {
+        ordersService.placeOrder(order);
+        return ResponseEntity.ok("Order placed successfully");
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<Object> getOrderById(@PathVariable("orderId") int orderId) {
-        List<Orders> ordersList = ordersService.getAll();
-        for (Orders order : ordersList) {
-            if (order.getOrder_id() == orderId) {
-                return ResponseEntity.ok(order);
-            }
+    public ResponseEntity<Orders> getOrderDetails(@PathVariable int orderId) {
+        Optional<Orders> order = ordersService.getOrderDetails(orderId);
+        if (order.isPresent()) {
+            return ResponseEntity.status(200).body(order.get());
+        } else {
+            return ResponseEntity.status(404).build();
         }
-        return ResponseEntity.status(404).body("{\"code\": \"NOTFOUND\", \"message\": \"Order not found\"}");
     }
 
-    // Update the status of a specific order
+
     @PutMapping("/{orderId}/status")
-    public ResponseEntity<Object> updateOrderStatus(@PathVariable("orderId") int orderId, @RequestBody Orders updatedOrder) {
-        List<Orders> ordersList = ordersService.getAll();
-        for (Orders order : ordersList) {
-            if (order.getOrder_id() == orderId) {
-                order.setOrder_status(updatedOrder.getOrder_status());
-                ordersService.update(order);
-                return ResponseEntity.ok("{\"code\": \"UPDATESUCCESS\", \"message\": \"Order status updated successfully\"}");
-            }
-        }
-        return ResponseEntity.status(404).body("{\"code\": \"NOTFOUND\", \"message\": \"Order not found\"}");
-    }
-
-    // Cancel a specific order
-    @DeleteMapping("/{orderId}")
-    public ResponseEntity<Object> cancelOrder(@PathVariable("orderId") int orderId) {
+    public ResponseEntity<String> updateOrderStatus(@PathVariable int orderId, @RequestBody String status) {
         try {
-            ordersService.delete(orderId);
-            return ResponseEntity.ok("{\"code\": \"DELETESUCCESS\", \"message\": \"Order canceled successfully\"}");
+            ordersService.updateOrderStatus(orderId, status);
+            return ResponseEntity.ok("Order status updated successfully");
         } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body("{\"code\": \"DELETEFAIL\", \"message\": \"" + e.getMessage() + "\"}");
+            return ResponseEntity.notFound().build();
         }
     }
 
-    // Retrieve all orders
-    @GetMapping
-    public ResponseEntity<Object> getAllOrders() {
-        List<Orders> ordersList = ordersService.getAll();
-        if (ordersList.isEmpty()) {
-            return ResponseEntity.status(404).body("{\"code\": \"NOTFOUND\", \"message\": \"No orders found\"}");
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<String> cancelOrder(@PathVariable int orderId) {
+        try {
+            ordersService.cancelOrder(orderId);
+            return ResponseEntity.ok("Order canceled successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(ordersList);
     }
 }
