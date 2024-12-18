@@ -1,19 +1,13 @@
 package com.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import com.model.*;
 
 @Entity
 @Table(name = "orders")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Orders {
 
     @Id
@@ -22,35 +16,117 @@ public class Orders {
     private int orderId;
 
     @Column(name = "order_date", nullable = false)
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
 
-    @Column(name = "order_status", nullable = false, length = 50)
+
+    @Column(name = "order_status", length = 50)
     private String orderStatus;
 
-    /** Many-to-One: Customer */
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customers customer;
 
-    /** Many-to-One: Restaurant */
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurants restaurant;
 
-    /** Many-to-One: DeliveryDriver */
     @ManyToOne
-    @JoinColumn(name = "delivery_driver_id")
+    @JoinColumn(name = "delivery_drive_id")
     private DeliveryDrivers deliveryDriver;
 
-    /** One-to-Many: OrderItems */
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItems> orderItems;
 
-    /** One-to-Many: Ratings */
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrdersCoupons> ordersCoupons;
+    
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<Ratings> ratings;
 
-    /** One-to-Many: OrdersCoupons */
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrdersCoupons> ordersCoupons;
+    public Orders() {
+    }
+
+    public Orders(Date orderDate, String orderStatus, Customers customer, Restaurants restaurant, DeliveryDrivers deliveryDriver) {
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
+        this.customer = customer;
+        this.restaurant = restaurant;
+        this.deliveryDriver = deliveryDriver;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Customers getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customers customer) {
+        this.customer = customer;
+    }
+
+    public Restaurants getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurants restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public DeliveryDrivers getDeliveryDriver() {
+        return deliveryDriver;
+    }
+
+    public void setDeliveryDriver(DeliveryDrivers deliveryDriver) {
+        this.deliveryDriver = deliveryDriver;
+    }
+
+    public List<OrderItems> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItems> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public List<OrdersCoupons> getOrdersCoupons() {
+        return ordersCoupons;
+    }
+
+    public void setOrdersCoupons(List<OrdersCoupons> ordersCoupons) {
+        this.ordersCoupons = ordersCoupons;
+    }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "orderId=" + orderId +
+                ", orderDate=" + orderDate +
+                ", orderStatus='" + orderStatus + '\'' +
+                ", customer=" + customer +
+                ", restaurant=" + restaurant +
+                ", deliveryDriver=" + deliveryDriver +
+                '}';
+    }
 }
