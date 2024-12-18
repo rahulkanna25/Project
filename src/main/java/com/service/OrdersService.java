@@ -1,38 +1,43 @@
 package com.service;
- 
-import com.DAO.OrdersDAO;
+
+import com.DAO.*;
 import com.model.Orders;
- 
-import java.util.List;
- 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
+
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class OrdersService {
- 
+
     @Autowired
     private OrdersDAO ordersDAO;
- 
-    public OrdersService() {}
-	public void add(Orders orders) {
-		ordersDAO.save(orders);
-	}
-	public List<Orders> getAll(){
-		return ordersDAO.findAll();
-	}
-	public void update(Orders orders) {
-		ordersDAO.save(orders);
-	}
-	public void delete(int id) {
-        Orders order = ordersDAO.findById(id).orElse(null);
-        if (order != null) {
-            ordersDAO.delete(order);
+
+    public Orders placeOrder(Orders order) {
+        return ordersDAO.save(order);
+    }
+
+    public Optional<Orders> getOrderDetails(int orderId) {
+        return ordersDAO.findById(orderId);
+    }
+
+    public Orders updateOrderStatus(int orderId, String status) {
+        Optional<Orders> existingOrder = ordersDAO.findById(orderId);
+        if (existingOrder.isPresent()) {
+            Orders order = existingOrder.get();
+            order.setOrderStatus(status);
+            return ordersDAO.save(order);
         } else {
-            throw new RuntimeException("Order with ID " + id + " not found");
+            throw new RuntimeException("Order with ID " + orderId + " not found.");
         }
     }
-	public void save(Orders orders) {
-		ordersDAO.save(orders);
-	}
+
+    public void cancelOrder(int orderId) {
+        if (ordersDAO.existsById(orderId)) {
+            ordersDAO.deleteById(orderId);
+        } else {
+            throw new RuntimeException("Order with ID " + orderId + " not found.");
+        }
+    }
 }
