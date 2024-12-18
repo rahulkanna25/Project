@@ -30,5 +30,5 @@ public class Coupons {
     private Date expiryDate;
 
     @OneToMany(mappedBy = "coupons", cascade = CascadeType.ALL)
-    private List<OrdersCoupons> ordersCoupons;
+   private List<OrdersCoupons> ordersCoupons;
 }

@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -16,24 +20,27 @@ public class Orders {
     private int orderId;
 
     @Column(name = "order_date", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate orderDate;
 
 
     @Column(name = "order_status", length = 50)
     private String orderStatus;
 
+    
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    private Restaurants restaurant;
+    
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customers customer;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    private Restaurants restaurant;
-
-    @ManyToOne
-    @JoinColumn(name = "delivery_drive_id")
-    private DeliveryDrivers deliveryDriver;
-
+    @JoinColumn(name = "driverid")
+    private DeliveryDrivers deliveryDrivers;
+    
+    
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItems> orderItems;
 
@@ -46,12 +53,12 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(Date orderDate, String orderStatus, Customers customer, Restaurants restaurant, DeliveryDrivers deliveryDriver) {
+    public Orders(LocalDate orderDate, String orderStatus, Customers customer, Restaurants restaurant, DeliveryDrivers deliveryDriver) {
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
         this.customer = customer;
         this.restaurant = restaurant;
-        this.deliveryDriver = deliveryDriver;
+        this.deliveryDrivers = deliveryDriver;
     }
 
     public int getOrderId() {
@@ -62,11 +69,11 @@ public class Orders {
         this.orderId = orderId;
     }
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -95,11 +102,11 @@ public class Orders {
     }
 
     public DeliveryDrivers getDeliveryDriver() {
-        return deliveryDriver;
+        return deliveryDrivers;
     }
 
     public void setDeliveryDriver(DeliveryDrivers deliveryDriver) {
-        this.deliveryDriver = deliveryDriver;
+        this.deliveryDrivers = deliveryDriver;
     }
 
     public List<OrderItems> getOrderItems() {
@@ -126,7 +133,7 @@ public class Orders {
                 ", orderStatus='" + orderStatus + '\'' +
                 ", customer=" + customer +
                 ", restaurant=" + restaurant +
-                ", deliveryDriver=" + deliveryDriver +
+                ", deliveryDriver=" + deliveryDrivers +
                 '}';
     }
 }

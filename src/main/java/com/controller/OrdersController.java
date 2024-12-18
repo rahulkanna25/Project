@@ -1,54 +1,61 @@
+
 package com.controller;
 
-import com.model.Orders;
-import com.service.OrdersService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import com.model.Orders;
+import com.service.OrdersService;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api")
 public class OrdersController {
 
     @Autowired
     private OrdersService ordersService;
 
-    @PostMapping
-    public ResponseEntity<String> placeOrder(@RequestBody Orders order) {
-        ordersService.placeOrder(order);
-        return ResponseEntity.ok("Order placed successfully");
+    
+    @PostMapping("/orders")
+    public ResponseEntity<?> placeOrder(@RequestBody Orders order) {
+        
+            ordersService.addOrder(order);
+            return ResponseEntity.ok("Order placed successfully");
+        
+            
+        
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<Orders> getOrderDetails(@PathVariable int orderId) {
-        Optional<Orders> order = ordersService.getOrderDetails(orderId);
-        if (order.isPresent()) {
-            return ResponseEntity.status(200).body(order.get());
-        } else {
-            return ResponseEntity.status(404).build();
-        }
+    public ResponseEntity<?> getOrderById(@PathVariable int orderId) {
+    	Orders order = ordersService.getOrderDetails(orderId);
+        
+        return new ResponseEntity<Orders>(order,HttpStatus.OK);
     }
 
-
-    @PutMapping("/{orderId}/status")
-    public ResponseEntity<String> updateOrderStatus(@PathVariable int orderId, @RequestBody String status) {
-        try {
-            ordersService.updateOrderStatus(orderId, status);
-            return ResponseEntity.ok("Order status updated successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    
+    @PutMapping("/{orderId}/{status}")
+    public ResponseEntity<?> updateOrderStatus(@PathVariable int orderId,@PathVariable String status ) {
+    	
+    	ordersService.updateOrderStatus(orderId, status);
+    	
+    	return new ResponseEntity<String>("Order Updated sucessfully",HttpStatus.OK);
+    	
+        
     }
 
+    
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<String> cancelOrder(@PathVariable int orderId) {
-        try {
-            ordersService.cancelOrder(orderId);
-            return ResponseEntity.ok("Order canceled successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<?> cancelOrder(@PathVariable int orderId) {
+    	ordersService.cancelOrder(orderId);
+    	
+    	return new ResponseEntity<String>("Order deleted sucessfully",HttpStatus.OK);
+    	
+        
     }
+
 }

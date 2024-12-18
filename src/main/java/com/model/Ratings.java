@@ -25,9 +25,9 @@ public class Ratings {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private Orders orders;
+    private Orders order;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
-    private Restaurants restaurants;
+    private Restaurants restaurant;
 }

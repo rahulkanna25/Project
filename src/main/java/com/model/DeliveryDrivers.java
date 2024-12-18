@@ -1,39 +1,45 @@
 package com.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
-	
-	import java.util.List;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-	import jakarta.persistence.CascadeType;
+import jakarta.persistence.CascadeType;
 	
 	import jakarta.persistence.OneToMany;
 
 	@Entity
 	public class DeliveryDrivers {
+		@Id
+		@GeneratedValue
 		private int driverid;
-		private String drivername;
-		private String driverphone;
-		private String drivervehicle;
+		private String driverName;
+		private String driverPhone;
+		private String driverVehicle;
 		private String driverLocation;
 		
 		@Override
 		public String toString() {
-			return "DeliveryDrivers [driver_id=" + driverid + ", driver_name=" + drivername + ", driver_phone="
-					+ driverphone + ", driver_vehicle=" + drivervehicle + ", driverLocation=" + driverLocation
-					+ ", orders=" + orders + "]";
+			return "DeliveryDrivers [driver_id=" + driverid + ", driver_name=" + driverName + ", driver_phone="
+					+ driverPhone + ", driver_vehicle=" + driverVehicle + ", driverLocation=" + driverLocation
+					+ ", orders=" +  "]";
 		}
 
 		public DeliveryDrivers(int driverid, String drivername, String driverphone, String drivervehicle,
-				String driverLocation, List<Orders> orders) {
+				String driverLocation) {
 			super();
 			this.driverid = driverid;
-			this.drivername = drivername;
-			this.driverphone = driverphone;
-			this.drivervehicle = drivervehicle;
+			this.driverName = drivername;
+			this.driverPhone = driverphone;
+			this.driverVehicle = drivervehicle;
 			this.driverLocation = driverLocation;
-			this.orders = orders;
+			
 		}
 
 		public String getDriverLocation() {
@@ -44,8 +50,7 @@ import jakarta.persistence.Entity;
 			this.driverLocation = driverLocation;
 		}
 
-		@OneToMany(mappedBy="deliveryDrivers",cascade=CascadeType.ALL)
-		List<Orders> orders;
+		
 		
 		public DeliveryDrivers() {}
 
@@ -58,37 +63,31 @@ import jakarta.persistence.Entity;
 		}
 
 		public String getDriver_name() {
-			return drivername;
+			return driverName;
 		}
 
 		public void setDriver_name(String driver_name) {
-			this.drivername = driver_name;
+			this.driverName = driver_name;
 		}
 
 		public String getDriver_phone() {
-			return driverphone;
+			return driverPhone;
 		}
 
 		public void setDriver_phone(String driver_phone) {
-			this.driverphone = driver_phone;
+			this.driverPhone = driver_phone;
 		}
 
 		public String getDriver_vehicle() {
-			return drivervehicle;
+			return driverVehicle;
 		}
 
 		
 		public void setDriver_vehicle(String driver_vehicle) {
-			this.drivervehicle = driver_vehicle;
+			this.driverVehicle = driver_vehicle;
 		}
 
-		public List<Orders> getOrders() {
-			return orders;
-		}
-
-		public void setOrders(List<Orders> orders) {
-			this.orders = orders;
-		}
+		
 
 		
 		

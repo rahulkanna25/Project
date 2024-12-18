@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +26,22 @@ public class DeliveryDriverController {
 	DeliveryDriverService deliveryDriverService;
 	
 	
+	@PostMapping("/add")
+    public ResponseEntity<?> placeOrder(@RequestBody DeliveryDrivers order) {
+		
+		deliveryDriverService.add(order);
+        
+            
+            return ResponseEntity.ok("{\"code\": \"ORDERSUCCESS\", \"message\": \"Order placed successfully\"}");
+        
+            
+        
+    }
+	
+	
+	
+	
+	
 	@GetMapping("/drivers")
 	public ResponseEntity<?> getDrivers(){
 		
@@ -39,7 +57,7 @@ public class DeliveryDriverController {
 		return new ResponseEntity<DeliveryDrivers>(driver,HttpStatus.OK);
 	}
 	
-	@PutMapping("api/orders/{orderid}/assignorder/{driverid}")
+	@PutMapping("/orders/{orderid}/assignorder/{driverid}")
 	public ResponseEntity<?>  assignOrders(@PathVariable int driverid,@PathVariable int orderid) {
 		
 		  deliveryDriverService.assignOrder(orderid, driverid);
@@ -48,7 +66,7 @@ public class DeliveryDriverController {
 	}
 	
 	
-	@PutMapping("/api/drivers/{driverid}/{location}")
+	@PutMapping("/drivers/{driverid}/{location}")
 	public ResponseEntity<?>  updateLocation(@PathVariable int driverid,@PathVariable String location) {
 		
 		  deliveryDriverService.updateLocation(driverid, location);
@@ -56,7 +74,7 @@ public class DeliveryDriverController {
 		return new ResponseEntity<String>("Location Updated",HttpStatus.OK);
 	}
 	
-	@GetMapping("/api/drivers/{driverid}/orders")
+	@GetMapping("/drivers/{driverid}/orders")
     public ResponseEntity<?>  getOrders(@PathVariable int driverid) {
 		
 		List<Orders> orderList = deliveryDriverService.allOrders(driverid);

@@ -1,6 +1,7 @@
 package com.service;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.DAO.DeliveryDriverDAO;
 import com.DAO.OrdersDAO;
+import com.exception.DriverNotFoundException;
+import com.exception.EmptyListException;
+import com.exception.OrderNotFoundException;
 import com.model.DeliveryDrivers;
-
 import com.model.Orders;
+
+
 
 @Service
 public class DeliveryDriverService {
@@ -22,11 +27,18 @@ public class DeliveryDriverService {
 	OrdersDAO  ordersDAO;
 	
 	
+	public void add(DeliveryDrivers d) {
+		deliveryDriversDAO.save(d);
+		
+		
+	}
+	
+	
 	public List<DeliveryDrivers> getAll(){
 		
 		List <DeliveryDrivers> Dl = deliveryDriversDAO.findAll();
 		if(Dl.isEmpty()) {
-			throw new RuntimeException("No Drivers Available");
+			throw new EmptyListException("No Drivers Available");
 		}
 		
 		return Dl;
@@ -37,9 +49,9 @@ public class DeliveryDriverService {
 		
 		Optional<DeliveryDrivers> driver =deliveryDriversDAO.findById(id);
 		
-		if(driver==null) {
+		if(!driver.isPresent()) {
 			
-			throw new RuntimeException("No Driver Exists");
+			throw new DriverNotFoundException("No Driver Exists");
 		}		
 		return driver.get();	
 	}
@@ -49,18 +61,18 @@ public class DeliveryDriverService {
 	   Optional<Orders> order = ordersDAO.findById(orderId);
 	   Optional <DeliveryDrivers> deliveryDriver = deliveryDriversDAO.findById(driverId);
 	   
-	   if(deliveryDriver==null) {
+	   if(!deliveryDriver.isPresent()) {
 		   
-		   throw new RuntimeException("No Driver Exists");
+		   throw new DriverNotFoundException("No Driver Exists");
 	   }
-	   if(order == null) {
+	   if(!order.isPresent()) {
 		   
-		   throw new RuntimeException("No Order Exists");
+		   throw new OrderNotFoundException("No Order Exists");
 	   }
 	   
 	   Orders updatedOrder = order.get();
-	   //DeliveryDrivers Driver = deliveryDriver.get();   
-	   
+	   DeliveryDrivers Driver = deliveryDriver.get();   
+	   updatedOrder.setDeliveryDriver(Driver);
 	   ordersDAO.save(updatedOrder);    
 	    
 	}
@@ -69,25 +81,25 @@ public class DeliveryDriverService {
 		
 		Optional <DeliveryDrivers> deliveryDriver = deliveryDriversDAO.findById(driverId);
 		
-		if(deliveryDriver==null) {
+		if(!deliveryDriver.isPresent()) {
 			   
-			   throw new RuntimeException("No Driver Exists");
+			   throw new DriverNotFoundException("No Driver Exists");
 		   }
 		
-		List<Orders> ol = deliveryDriver.get().getOrders();
+		List<Orders> ol = ordersDAO.findByDeliveryDriversDriverid(driverId);
 		
 		if(ol.isEmpty()){
 			
-			throw new RuntimeException("No Orders Assigned");
+			throw new EmptyListException("No Orders Assigned");
 		}
 		return ol;
 	}
 	
 	public void updateLocation(int driverId, String driverLocation) {
 		Optional <DeliveryDrivers> deliveryDriver = deliveryDriversDAO.findById(driverId);
-		   if(deliveryDriver==null) {
+		   if(deliveryDriver.isEmpty()) {
 			   
-			   throw new RuntimeException("No Driver Exists");
+			   throw new EmptyListException("No Driver Exists");
 		   }
 		   DeliveryDrivers Driver = deliveryDriver.get();
 		   Driver.setDriverLocation(driverLocation);
