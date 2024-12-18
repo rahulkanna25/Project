@@ -1,59 +1,44 @@
 package com.service;
-
-import com.model.Restaurants;
-import com.model.MenuItems;
-import com.model.Ratings;
-import com.DAO.RestaurantsDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+ 
 import java.util.List;
 import java.util.Optional;
-
+ 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+ 
+import com.DAO.RestaurantsDAO;
+import com.model.Restaurants;
+ 
 @Service
 public class RestaurantsService {
-
+ 
     @Autowired
-    private RestaurantsDAO restaurantsDao;
-
+    private RestaurantsDAO restaurantsDAO;
+ 
     public List<Restaurants> getAllRestaurants() {
-        return restaurantsDao.findAll();
+        return restaurantsDAO.findAll();
     }
-
-    public Optional<Restaurants> getRestaurantById(int restaurantId) {
-        return restaurantsDao.findById(restaurantId);
+ 
+    public Restaurants getRestaurantById(int id) {
+        return restaurantsDAO.findById(id).orElse(null);
     }
-
-    public Restaurants createRestaurant(Restaurants restaurant) {
-        return restaurantsDao.save(restaurant);
+ 
+    public void saveRestaurant(Restaurants restaurant) {
+        restaurantsDAO.save(restaurant);
     }
-
-    public Restaurants updateRestaurant(int restaurantId, Restaurants restaurantDetails) {
-        return restaurantsDao.findById(restaurantId).map(existingRestaurant -> {
-            existingRestaurant.setRestaurantName(restaurantDetails.getRestaurantName());
-            existingRestaurant.setRestaurantAddress(restaurantDetails.getRestaurantAddress());
-            existingRestaurant.setRestaurantPhone(restaurantDetails.getRestaurantPhone());
-            return restaurantsDao.save(existingRestaurant);
-        }).orElseThrow(() -> new RuntimeException("Restaurant not found with ID: " + restaurantId));
+ 
+    public void updateRestaurant(int id, Restaurants restaurant) {
+        Optional<Restaurants> existingRestaurant = restaurantsDAO.findById(id);
+        if (existingRestaurant.isPresent()) {
+            Restaurants updatedRestaurant = existingRestaurant.get();
+            updatedRestaurant.setRestaurantName(restaurant.getRestaurantName());
+            updatedRestaurant.setRestaurantAddress(restaurant.getRestaurantAddress());
+            updatedRestaurant.setRestaurantPhone(restaurant.getRestaurantPhone());
+            restaurantsDAO.save(updatedRestaurant);
+        }
     }
-
-    public void deleteRestaurant(int restaurantId) {
-        restaurantsDao.deleteById(restaurantId);
-    }
-
-    public List<MenuItems> getMenuByRestaurantId(int restaurantId) {
-        return restaurantsDao.findById(restaurantId)
-                .map(Restaurants::getMenuItems)
-                .orElseThrow(() -> new RuntimeException("Restaurant not found with ID: " + restaurantId));
-    }
-
-    public List<Ratings> getReviewsByRestaurantId(int restaurantId) {
-        return restaurantsDao.findById(restaurantId)
-                .map(Restaurants::getRatings)
-                .orElseThrow(() -> new RuntimeException("Restaurant not found with ID: " + restaurantId));
-    }
-
-    public List<String> getDeliveryAreasByRestaurantId(int restaurantId) {
-        return List.of("Area 1", "Area 2", "Area 3"); 
+ 
+    public void deleteRestaurant(int id) {
+        restaurantsDAO.deleteById(id);
     }
 }
