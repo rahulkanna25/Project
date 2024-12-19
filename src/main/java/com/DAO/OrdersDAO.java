@@ -8,5 +8,7 @@ import com.model.Orders;
 @Repository
 public interface OrdersDAO extends JpaRepository<Orders, Integer>{
 	List<Orders> findByDeliveryDriversDriverid(int driverid);
+	
+	List<Orders> findByCustomerCustomerId(int customerid);
  
 }

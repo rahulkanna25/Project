@@ -1,12 +1,14 @@
 package com.controller;
 
-import com.model.Customers;
-import com.model.Ratings;
-import com.service.CustomersService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.model.Customers;
+import com.model.Orders;
+import com.service.CustomersService;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +19,7 @@ public class CustomersController {
 
     @Autowired
     private CustomersService customersService;
+ 
 
     @GetMapping
     public List<Customers> getAllCustomers() {
@@ -42,6 +45,20 @@ public class CustomersController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+    
+    @GetMapping("/{customerId}/orders")
+    public ResponseEntity<?> getOrdersByCustomerId(@PathVariable int customerId) {
+    	 try {
+             List<Orders> ol = customersService.getOrdersByCustomerId(customerId);
+             return new ResponseEntity<List<Orders>>(ol,HttpStatus.OK);
+         } catch (RuntimeException e) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
+         }
+        
+    }
+    
+    
+
 
     @DeleteMapping("/{customerId}")
     public ResponseEntity<String> deleteCustomer(@PathVariable int customerId) {

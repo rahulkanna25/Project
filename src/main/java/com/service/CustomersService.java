@@ -1,9 +1,15 @@
 package com.service;
 
-import com.model.Customers;
-import com.DAO.CustomersDAO;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.DAO.CustomersDAO;
+import com.DAO.OrdersDAO;
+import com.exception.OrderNotFoundException;
+import com.model.Customers;
+import com.model.Orders;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +18,11 @@ import java.util.Optional;
 public class CustomersService {
     @Autowired
     private CustomersDAO customersDAO;
+    
+    
+    @Autowired
+    private OrdersDAO orderDAO;
+    
 
     public List<Customers> getAllCustomers() {
         return customersDAO.findAll();
@@ -21,7 +32,6 @@ public class CustomersService {
         return customersDAO.findById(id);
     }
 
-  
 
     public void deleteCustomer(int id) {
         if (customersDAO.existsById(id)) {
@@ -32,9 +42,32 @@ public class CustomersService {
     }
 
 	public Customers updateCustomer(int customerId, Customers customerDetails) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Optional<Customers> existingCustomer = customersDAO.findById(customerId);
+        if (existingCustomer.isPresent()) {
+            Customers customer = existingCustomer.get();
+            customer.setCustomerName(customerDetails.getCustomerName());
+            customer.setCustomerPhone(customerDetails.getCustomerPhone());
+            customer.setCustomerEmail(customerDetails.getCustomerEmail());
+            return customersDAO.save(customer);
+        } else {
+            throw new OrderNotFoundException("Order with ID " + customerId + " not found.");
+        }
+    }
+	
+	
+	public List<Orders> getOrdersByCustomerId(int customerId){
+		
+		if(customersDAO.existsById(customerId)) {
+		
+		return orderDAO.findByCustomerCustomerId(customerId);
+		
+		}else {
+			
+			throw new RuntimeException("Customer not found");
+			
+		}
+		
 	}
-
-   
+	
 }
