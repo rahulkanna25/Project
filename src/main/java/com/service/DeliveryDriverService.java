@@ -26,10 +26,7 @@ public class DeliveryDriverService {
 	
 	@Autowired
 	OrdersDAO  ordersDAO;
-	
-	
-	
-	
+
 	
 	public List<DeliveryDrivers> getAll(){
 		

@@ -42,24 +42,33 @@ public class OrdersService {
 
     public Orders addOrder(Orders order) {
     	
-    	DeliveryDrivers driver = deliveryDriverDAO.findById(order.getDeliveryDriver().getDriver_id())
-                .orElseThrow(() -> new DriverNotFoundException("Driver not found with id: " + order.getDeliveryDriver().getDriver_id()));
+    Optional <DeliveryDrivers> driver = deliveryDriverDAO.findById(order.getDeliveryDriver().getDriver_id());
+                if(!driver.isPresent()) {
+                
+                
+                throw new DriverNotFoundException("Driver not found with id: " + order.getDeliveryDriver().getDriver_id());
+                }
+                   else {
         
+        order.setDeliveryDriver(driver.get());
+                }
+    Optional <Restaurants> restaurant = restaurantDAO.findById(order.getRestaurant().getRestaurantId());
+            if(!restaurant.isPresent()) {
+   
+   
+                 new DriverNotFoundException("Restaurant not found with id: " + order.getRestaurant().getRestaurantId());
+            }else {
         
-        order.setDeliveryDriver(driver);
+        order.setRestaurant(restaurant.get());
+            }
+       Optional <Customers> customer = customerDAO.findById(order.getCustomer().getCustomerId());
+       
+       if(!customer.isPresent()) {
+                 new DriverNotFoundException("Customer not found with id: " + order.getCustomer().getCustomerId());
+       }else {
         
-        Restaurants restaurant = restaurantDAO.findById(order.getRestaurant().getRestaurantId())
-                .orElseThrow(() -> new DriverNotFoundException("Restaurant not found with id: " + order.getRestaurant().getRestaurantId()));
-        
-        
-        order.setRestaurant(restaurant);
-        
-        Customers customer = customerDAO.findById(order.getCustomer().getCustomerId())
-                .orElseThrow(() -> new DriverNotFoundException("Customer not found with id: " + order.getCustomer().getCustomerId()));
-        
-        
-        order.setCustomer(customer);
-        
+        order.setCustomer(customer.get());
+       }
         
         return ordersDAO.save(order);
         

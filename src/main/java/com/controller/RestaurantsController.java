@@ -2,6 +2,7 @@ package com.controller;
  
 import com.model.Restaurants;
 
+
 import com.service.RestaurantsService;
  
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,12 +85,7 @@ public class RestaurantsController {
 
     public ResponseEntity<Object> deleteRestaurant(@PathVariable int restaurantId) {
 
-        if (restaurantsService.getRestaurantById(restaurantId) == null) {
-
-            return ResponseEntity.status(404).body("{\"code\": \"DELFAILS\", \"message\": \"Restaurant not found\"}");
-
-        }
-
+      
         restaurantsService.deleteRestaurant(restaurantId);
 
         return ResponseEntity.ok("{\"code\": \"DELSUCCESS\", \"message\": \"Restaurant deleted successfully\"}");
@@ -98,7 +94,9 @@ public class RestaurantsController {
  
     @GetMapping("/{restaurantId}/menu")
 
-    public ResponseEntity<Object> getMenuByRestaurant(@PathVariable Long restaurantId) {
+    public ResponseEntity<Object> getMenuByRestaurant(@PathVariable int restaurantId) {
+    	
+    	restaurantsService.getMenu(restaurantId);
 
         return ResponseEntity.ok("{\"message\": \"Menu items for restaurant retrieved successfully\"}");
 
@@ -107,6 +105,8 @@ public class RestaurantsController {
     @GetMapping("/{restaurantId}/reviews")
 
     public ResponseEntity<Object> getReviewsByRestaurant(@PathVariable int restaurantId) {
+    	
+    	restaurantsService.getRatings(restaurantId);
 
         return ResponseEntity.ok("{\"message\": \"Reviews for the restaurant retrieved successfully\"}");
 
