@@ -22,8 +22,8 @@ public class Restaurants {
     @Column(name = "restaurant_phone", length = 20)
     private String restaurantPhone;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private List<MenuItems> menuItems;
+   @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+   private List<MenuItems> menuItems;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Ratings> ratings;

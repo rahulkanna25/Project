@@ -2,6 +2,7 @@ package com.service;
 
 import java.util.List;
 
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,7 @@ public class DeliveryDriverService {
 	OrdersDAO  ordersDAO;
 	
 	
-	public void add(DeliveryDrivers d) {
-		deliveryDriversDAO.save(d);
-		
-		
-	}
+	
 	
 	
 	public List<DeliveryDrivers> getAll(){

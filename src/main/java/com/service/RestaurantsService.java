@@ -16,6 +16,7 @@ public class RestaurantsService {
     private RestaurantsDAO restaurantsDAO;
  
     public List<Restaurants> getAllRestaurants() {
+    	
         return restaurantsDAO.findAll();
     }
  

@@ -1,18 +1,11 @@
 package com.model;
 
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.CascadeType;
-	
-	import jakarta.persistence.OneToMany;
 
 	@Entity
 	public class DeliveryDrivers {
