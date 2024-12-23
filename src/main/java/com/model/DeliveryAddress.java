@@ -1,19 +1,15 @@
 package com.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "deliveryaddresses")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class DeliveryAddress {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "address_id")
     private int addressId;
 
@@ -35,4 +31,75 @@ public class DeliveryAddress {
 
     @Column(name = "postal_code", length = 20, nullable = false)
     private String postalCode;
+    
+    @OneToMany(mappedBy = "deliveryAddress")
+    private List<Orders> orders;
+
+    public DeliveryAddress() {}
+
+    public DeliveryAddress(int addressId, Customers customer, String addressLine1, String addressLine2, String city, String state, String postalCode) {
+        this.addressId = addressId;
+        this.customer = customer;
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
+        this.city = city;
+        this.state = state;
+        this.postalCode = postalCode;
+    }
+
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
+    }
+
+    public Customers getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customers customer) {
+        this.customer = customer;
+    }
+
+    public String getAddressLine1() {
+        return addressLine1;
+    }
+
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
+    }
+
+    public String getAddressLine2() {
+        return addressLine2;
+    }
+
+    public void setAddressLine2(String addressLine2) {
+        this.addressLine2 = addressLine2;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
 }

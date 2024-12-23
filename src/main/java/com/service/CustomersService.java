@@ -1,11 +1,21 @@
 package com.service;
 
+<<<<<<< HEAD
 
 
+=======
+import com.model.Customers;
+import com.DAO.CustomersDAO; // Import your CustomersDAO
+import com.DAO.OrdersDAO;
+import com.DAO.RatingsDAO;
+import com.model.Orders; // Assuming you have an Orders class
+import com.model.Ratings; // Assuming you have a Ratings class
+>>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import com.DAO.CustomersDAO;
 import com.DAO.OrdersDAO;
 import com.DAO.RatingsDAO;
@@ -16,14 +26,19 @@ import com.model.Customers;
 import com.model.Orders;
 import com.model.Ratings;
 
+=======
+import java.util.ArrayList;
+>>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CustomersService {
+
     @Autowired
     private CustomersDAO customersDAO;
     
+<<<<<<< HEAD
     
     @Autowired
     private OrdersDAO orderDAO;
@@ -32,24 +47,38 @@ public class CustomersService {
     @Autowired
     RatingsDAO ratingsDAO;
     
+=======
+    @Autowired
+    private RatingsDAO ratingsDAO;
+    @Autowired
+    private OrdersDAO ordersDAO;
+>>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
 
     public List<Customers> getAllCustomers() {
-        return customersDAO.findAll();
+        return customersDAO.findAll(); 
     }
 
-    public Optional<Customers> getCustomerById(int id) {
-        return customersDAO.findById(id);
+    public Optional<Customers> getCustomerById(int customerId) {
+        return customersDAO.findById(customerId);
     }
 
+<<<<<<< HEAD
 
     public void deleteCustomer(int id) {
         if (customersDAO.existsById(id)) {
             customersDAO.deleteById(id);
+=======
+    public Customers updateCustomer(int customerId, Customers updatedCustomer) {
+        if (customersDAO.existsById(customerId)) {
+            updatedCustomer.setCustomerId(customerId); 
+            return customersDAO.save(updatedCustomer); 
+>>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
         } else {
             throw new CustomerNotFoundException("Customer not found");
         }
     }
 
+<<<<<<< HEAD
 	public Customers updateCustomer(int customerId, Customers customerDetails) {
 		
 		Optional<Customers> existingCustomer = customersDAO.findById(customerId);
@@ -105,4 +134,28 @@ public class CustomersService {
    }
 	
 	}
+=======
+    public void deleteCustomer(int customerId) {
+        if (customersDAO.existsById(customerId)) {
+            customersDAO.deleteById(customerId); 
+        } else {
+            throw new RuntimeException("Customer not found"); 
+        }
+    }
+
+   /* public List<Orders> getOrdersByCustomer(int customerId) {
+    }*/
+    public List<Ratings> getReviewsByCustomer(int customerId) {
+    	List<Orders> orderslist = ordersDAO.findByCustomer_CustomerId(customerId);         
+    	List<Ratings> ratingList = new ArrayList<>();
+    	for(Orders o: orderslist) {
+    		ratingList.addAll(ratingsDAO.findByOrderId(o.getOrderId()));
+    	}
+    	return ratingList;
+    }
+
+    
+
+    
+>>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
 }

@@ -2,7 +2,10 @@ package com.controller;
 
 import java.util.List;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.PutMapping;
 
+<<<<<<< HEAD
+=======
+import org.springframework.web.bind.annotation.RequestMapping;
+>>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
 import org.springframework.web.bind.annotation.RestController;
 
 import com.model.DeliveryDrivers;
@@ -26,6 +33,14 @@ public class DeliveryDriverController {
 	DeliveryDriverService deliveryDriverService;
 	
 	
+<<<<<<< HEAD
+=======
+	
+	
+	
+	
+	
+>>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
 	@GetMapping("/api/drivers")
 	public ResponseEntity<?> getDrivers(){
 		
@@ -68,4 +83,8 @@ public class DeliveryDriverController {
 	
 	
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
