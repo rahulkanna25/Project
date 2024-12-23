@@ -1,44 +1,38 @@
 package com.model;
 
-import java.util.List;
-
 import jakarta.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "restaurants")
 public class Restaurants {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "restaurant_id")
     private int restaurantId;
 
-    @Column(name = "restaurant_name", nullable = false, length = 255)
+    @Column(name = "restaurant_name", nullable = false)
     private String restaurantName;
 
-    @Column(name = "restaurant_address", nullable = false, length = 255)
+    @Column(name = "restaurant_address", nullable = false)
     private String restaurantAddress;
-
-    @Column(name = "restaurant_phone", length = 20)
+    
+    @Column(name="restaurant_phone", nullable=false)
     private String restaurantPhone;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private List<MenuItems> menuItems;
-
+    private Set<MenuItems> menuItems;
+    
+    @ManyToOne
+    @JoinColumn(name = "delivery_address_id")
+    private DeliveryAddress deliveryAddress;
+    
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private List<Ratings> ratings;
+    private List<Orders> orders;
 
-    // Default Constructor
-    public Restaurants() {
-    }
-
-    // Parameterized Constructor
-    public Restaurants(int restaurantId, String restaurantName, String restaurantAddress, String restaurantPhone) {
-        this.restaurantId = restaurantId;
-        this.restaurantName = restaurantName;
-        this.restaurantAddress = restaurantAddress;
-        this.restaurantPhone = restaurantPhone;
-    }
+    public Restaurants() {}
 
     // Getters and Setters
     public int getRestaurantId() {
@@ -73,30 +67,19 @@ public class Restaurants {
         this.restaurantPhone = restaurantPhone;
     }
 
-    public List<MenuItems> getMenuItems() {
+    public Set<MenuItems> getMenuItems() {
         return menuItems;
     }
 
-    public void setMenuItems(List<MenuItems> menuItems) {
+    public void setMenuItems(Set<MenuItems> menuItems) {
         this.menuItems = menuItems;
     }
 
-    public List<Ratings> getRatings() {
-        return ratings;
+    public List<Orders> getOrders() {
+        return orders;
     }
 
-    public void setRatings(List<Ratings> ratings) {
-        this.ratings = ratings;
-    }
-
-    // toString Method
-    @Override
-    public String toString() {
-        return "Restaurants{" +
-                "restaurantId=" + restaurantId +
-                ", restaurantName='" + restaurantName + '\'' +
-                ", restaurantAddress='" + restaurantAddress + '\'' +
-                ", restaurantPhone='" + restaurantPhone + '\'' +
-                '}';
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
     }
 }

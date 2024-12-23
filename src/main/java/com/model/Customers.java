@@ -1,14 +1,14 @@
 package com.model;
 
-import java.util.List;
 import jakarta.persistence.*;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "customers")
 public class Customers {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
     private int customerId;
 
@@ -22,33 +22,17 @@ public class Customers {
     private String customerPhone;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<DeliveryAddress> deliveryAddresses;
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Orders> orders;
 
-    // No-argument constructor
-    public Customers() {
-        super();
-    }
-
-    // All-argument constructor
-    public Customers(int customerId, String customerName, String customerEmail, String customerPhone,
-                     List<DeliveryAddress> deliveryAddresses, List<Orders> orders) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.customerEmail = customerEmail;
-        this.customerPhone = customerPhone;
-        this.deliveryAddresses = deliveryAddresses;
-        this.orders = orders;
-    }
+    public Customers() {}
 
     // Getters and Setters
-    public int getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
@@ -76,32 +60,11 @@ public class Customers {
         this.customerPhone = customerPhone;
     }
 
-    public List<DeliveryAddress> getDeliveryAddresses() {
-        return deliveryAddresses;
-    }
-
-    public void setDeliveryAddresses(List<DeliveryAddress> deliveryAddresses) {
-        this.deliveryAddresses = deliveryAddresses;
-    }
-
     public List<Orders> getOrders() {
         return orders;
     }
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
-    }
-
-    // toString method
-    @Override
-    public String toString() {
-        return "Customers{" +
-                "customerId=" + customerId +
-                ", customerName='" + customerName + '\'' +
-                ", customerEmail='" + customerEmail + '\'' +
-                ", customerPhone='" + customerPhone + '\'' +
-                ", deliveryAddresses=" + deliveryAddresses +
-                ", orders=" + orders +
-                '}';
     }
 }

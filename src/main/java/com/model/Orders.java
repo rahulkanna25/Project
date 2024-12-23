@@ -1,56 +1,102 @@
 package com.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference; 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import com.model.*;
 
 @Entity
 @Table(name = "orders")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Orders {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")
     private int orderId;
 
     @Column(name = "order_date", nullable = false)
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
 
-    @Column(name = "order_status", nullable = false, length = 50)
+    @Column(name = "order_status", length = 50)
     private String orderStatus;
 
-    /** Many-to-One: Customer */
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customers customer;
-
-    /** Many-to-One: Restaurant */
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
-    private Restaurants restaurant;
+	@JsonBackReference // Prevent recursion during serialization
+	private Restaurants restaurant;
 
-    /** Many-to-One: DeliveryDriver */
-    @ManyToOne
-    @JoinColumn(name = "delivery_driver_id")
-    private DeliveryDriver deliveryDriver;
+	@ManyToOne
+	@JoinColumn(name = "driver_id")
+	private DeliveryDrivers deliveryDriver;
 
-    /** One-to-Many: OrderItems */
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItems> orderItems;
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
+	private Customers customer;
 
-    /** One-to-Many: Ratings */
+	@ManyToOne
+	@JoinColumn(name = "delivery_address_id")
+	private DeliveryAddress deliveryAddress;
+	
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<Ratings> ratings;
 
-    /** One-to-Many: OrdersCoupons */
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrdersCoupons> ordersCoupons;
+	public Orders() {}
+
+	public Orders(LocalDate orderDate, String orderStatus, Restaurants restaurant,
+			DeliveryDrivers deliveryDriver, Customers customer) {
+		this.orderDate = orderDate;
+		this.orderStatus = orderStatus;
+		this.restaurant = restaurant;
+		this.deliveryDriver = deliveryDriver;
+		this.customer = customer;
+	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+	public LocalDate getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(LocalDate orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public Restaurants getRestaurant() {
+		return restaurant;
+	}
+
+	public void setRestaurant(Restaurants restaurant) {
+		this.restaurant = restaurant;
+	}
+
+	public DeliveryDrivers getDeliveryDriver() {
+		return deliveryDriver;
+	}
+
+	public void setDeliveryDriver(DeliveryDrivers deliveryDriver) {
+		this.deliveryDriver = deliveryDriver;
+	}
+
+	public Customers getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customers customer) {
+		this.customer = customer;
+	}
 }

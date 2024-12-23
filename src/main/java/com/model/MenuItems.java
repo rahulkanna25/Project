@@ -1,78 +1,46 @@
 package com.model;
 
-import java.util.List;
-
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "menuitems")
+@Table(name = "menu_items")
 public class MenuItems {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "item_id")
-    private int id;
-
-    @Column(name = "item_name", nullable = false)
-    private String itemName;
-
-    @Column(name = "item_description")
-    private String description;
-
-    @Column(name = "item_price", nullable = false)
-    private float price;
+    private int menuItemId;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurants restaurant;
 
-    @OneToMany(mappedBy = "menuItems", cascade = CascadeType.ALL)
-    private List<OrderItems> orderItems;
+    @Column(name = "item_name", nullable = false)
+    private String itemName;
 
-    // Default constructor
-    public MenuItems() {}
+    @Column(name = "item_price", nullable = false)
+    private BigDecimal itemPrice;
+    
+	@Column(name="item_description", columnDefinition="TEXT")
+	private String itemDescription;
 
-    // Constructor with all fields
-    public MenuItems(int id, String itemName, String description, float price, Restaurants restaurant, List<OrderItems> orderItems) {
-        this.id = id;
-        this.itemName = itemName;
-        this.description = description;
-        this.price = price;
-        this.restaurant = restaurant;
-        this.orderItems = orderItems;
+    public String getItemDescription() {
+		return itemDescription;
+	}
+
+	public void setItemDescription(String itemDescription) {
+		this.itemDescription = itemDescription;
+	}
+
+	public MenuItems() {}
+
+    public int getMenuItemId() {
+        return menuItemId;
     }
 
-    // Getters and setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
+    public void setMenuItemId(int menuItemId) {
+        this.menuItemId = menuItemId;
     }
 
     public Restaurants getRestaurant() {
@@ -83,12 +51,19 @@ public class MenuItems {
         this.restaurant = restaurant;
     }
 
-    public List<OrderItems> getOrderItems() {
-        return orderItems;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setOrderItems(List<OrderItems> orderItems) {
-        this.orderItems = orderItems;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
+    public BigDecimal getItemPrice() {
+        return itemPrice;
+    }
+
+    public void setItemPrice(BigDecimal itemPrice) {
+        this.itemPrice = itemPrice;
+    }
 }
