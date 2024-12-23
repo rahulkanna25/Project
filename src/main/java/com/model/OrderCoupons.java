@@ -1,42 +1,54 @@
 package com.model;
-
-import jakarta.persistence.*;
-
+import jakarta.persistence.EmbeddedId;
+ 
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
+ 
 @Entity
-@Table(name = "ordercoupons")
-public class OrderCoupons {
-
-   
-
+@Table(name ="OrdersCoupons")
+public class OrdersCoupons {
+	
+	@EmbeddedId
+    private OrdersCouponsId id;
+	
+	
+	@ManyToOne
+	@MapsId("orderId")
+    @JoinColumn(name = "order_id")
+    private Orders orders;
+ 
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Orders order; 
-
-    @ManyToOne
-    @JoinColumn(name = "coupon_id", nullable = false)
-    private Coupons coupon; 
-
-    public OrderCoupons() {
-    }
-
-    // Getters and Setters
-
-
-    
-
-    public Orders getOrder() {
-        return order;
-    }
-
-    public void setOrder(Orders order) {
-        this.order = order;
-    }
-
-    public Coupons getCoupon() {
-        return coupon;
-    }
-
-    public void setCoupon(Coupons coupon) {
-        this.coupon = coupon;
-    }
+    @MapsId("couponId")
+    @JoinColumn(name = "coupon_id")
+    private Coupons coupons;
+ 
+	public OrdersCouponsId getId() {
+		return id;
+	}
+ 
+	public void setId(OrdersCouponsId id) {
+		this.id = id;
+	}
+ 
+	public Orders getOrders() {
+		return orders;
+	}
+ 
+	public void setOrders(Orders orders) {
+		this.orders = orders;
+	}
+ 
+	public Coupons getCoupons() {
+		return coupons;
+	}
+ 
+	public void setCoupons(Coupons coupons) {
+		this.coupons = coupons;
+	}
+ 
+ 
+ 
 }
