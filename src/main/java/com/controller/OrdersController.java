@@ -25,7 +25,7 @@ public class OrdersController {
     public ResponseEntity<?> placeOrder(@RequestBody Orders order) {
         
             ordersService.addOrder(order);
-            return ResponseEntity.ok("Order placed successfully");
+            return  new ResponseEntity<String>("Order Placed Sucessfully",HttpStatus.CREATED);
         
             
         

@@ -96,9 +96,9 @@ public class RestaurantsController {
 
     public ResponseEntity<Object> getMenuByRestaurant(@PathVariable int restaurantId) {
     	
-    	restaurantsService.getMenu(restaurantId);
+    	
 
-        return ResponseEntity.ok("{\"message\": \"Menu items for restaurant retrieved successfully\"}");
+        return ResponseEntity.ok(restaurantsService.getMenu(restaurantId));
 
     }
  
