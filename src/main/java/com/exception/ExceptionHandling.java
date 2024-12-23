@@ -39,6 +39,25 @@ public class ExceptionHandling {
 		err.setMessage( exe.getMessage());
 		return new ResponseEntity<ErrorResponse>(err,HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(CustomerNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleException(CustomerNotFoundException exe)
+	{
+		ErrorResponse err= new ErrorResponse();
+	    err.setTimestamp(LocalDateTime.now());
+		err.setStatus( HttpStatus.NOT_FOUND);
+		err.setMessage( exe.getMessage());
+		return new ResponseEntity<ErrorResponse>(err,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler(RestaurantNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleException(RestaurantNotFoundException exe)
+	{
+		ErrorResponse err= new ErrorResponse();
+	    err.setTimestamp(LocalDateTime.now());
+		err.setStatus( HttpStatus.NOT_FOUND);
+		err.setMessage( exe.getMessage());
+		return new ResponseEntity<ErrorResponse>(err,HttpStatus.NOT_FOUND);
+	}
 	@ExceptionHandler()
 	public ResponseEntity<ErrorResponse> handleException(Exception exe)
 	{

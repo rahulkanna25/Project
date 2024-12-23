@@ -91,7 +91,7 @@ public class DeliveryDriverService {
 	
 	public void updateLocation(int driverId, String driverLocation) {
 		Optional <DeliveryDrivers> deliveryDriver = deliveryDriversDAO.findById(driverId);
-		   if(deliveryDriver.isEmpty()) {
+		   if(!deliveryDriver.isPresent()) {
 			   
 			   throw new EmptyListException("No Driver Exists");
 		   }
