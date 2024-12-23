@@ -13,6 +13,7 @@ import com.DAO.RestaurantsDAO;
 import com.exception.CustomerNotFoundException;
 import com.exception.DriverNotFoundException;
 import com.exception.OrderNotFoundException;
+import com.exception.RestaurantNotFoundException;
 import com.model.Customers;
 import com.model.DeliveryDrivers;
 import com.model.Orders;
@@ -57,7 +58,7 @@ public class OrdersService {
             if(!restaurant.isPresent()) {
    
    
-                 new DriverNotFoundException("Restaurant not found with id: " + order.getRestaurant().getRestaurantId());
+               throw  new RestaurantNotFoundException("Restaurant not found with id: " + order.getRestaurant().getRestaurantId());
             }else {
         
         order.setRestaurant(restaurant.get());
