@@ -10,6 +10,7 @@ import com.DAO.MenuItemsDAO;
 import com.DAO.RatingsDAO;
 import com.DAO.RestaurantsDAO;
 import com.exception.EmptyListException;
+import com.exception.RestaurantNotFoundException;
 import com.model.DeliveryAddress;
 import com.model.MenuItems;
 import com.model.Ratings;
@@ -34,11 +35,21 @@ public class RestaurantsService {
  
     public List<Restaurants> getAllRestaurants() {
     	
-        return restaurantsDAO.findAll();
+    	List<Restaurants> rl = restaurantsDAO.findAll();
+    	
+    	if(rl.isEmpty()) {
+    		throw new EmptyListException("No Restaurants Available");
+    		
+    	}
+    	return rl;
     }
  
     public Restaurants getRestaurantById(int id) {
-        return restaurantsDAO.findById(id).orElse(null);
+        Optional<Restaurants> restaurant =restaurantsDAO.findById(id);
+        if(!restaurant.isPresent()) {
+        	throw new RestaurantNotFoundException("No Restaurant with Id "+id+ " found" );
+        }
+        return restaurant.get() ;
     }
  
     public void saveRestaurant(Restaurants restaurant) {
@@ -53,6 +64,8 @@ public class RestaurantsService {
             updatedRestaurant.setRestaurantAddress(restaurant.getRestaurantAddress());
             updatedRestaurant.setRestaurantPhone(restaurant.getRestaurantPhone());
             restaurantsDAO.save(updatedRestaurant);
+        }else {
+        	throw new RestaurantNotFoundException("No Restaurant with Id "+id+ " found" );
         }
     }
     public void deleteRestaurant(int id) {
@@ -60,7 +73,7 @@ public class RestaurantsService {
         restaurantsDAO.deleteById(id);
     }else {
     	
-    	throw new RuntimeException("No Restaurant exists");
+    	throw new RestaurantNotFoundException("No Restaurant with Id "+id+ " found" );
     	
     }
     }
@@ -91,7 +104,7 @@ public class RestaurantsService {
 		  List<DeliveryAddress> address = deliveryAddressDAO.findAddressByRestaurantId(restaurantId);
 		  
 		  if(address.isEmpty()) {
-			  throw new EmptyListException("No reviews available");
+			  throw new EmptyListException("No addresses served");
 		  }
 		  return address;
 			   

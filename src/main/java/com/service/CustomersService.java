@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.DAO.CustomersDAO;
 import com.DAO.OrdersDAO;
 import com.DAO.RatingsDAO;
+import com.exception.CustomerNotFoundException;
+import com.exception.EmptyListException;
 import com.exception.OrderNotFoundException;
 import com.model.Customers;
 import com.model.Orders;
@@ -44,7 +46,7 @@ public class CustomersService {
         if (customersDAO.existsById(id)) {
             customersDAO.deleteById(id);
         } else {
-            throw new RuntimeException("Customer not found");
+            throw new CustomerNotFoundException("Customer not found");
         }
     }
 
@@ -58,7 +60,7 @@ public class CustomersService {
             customer.setCustomerEmail(customerDetails.getCustomerEmail());
             return customersDAO.save(customer);
         } else {
-            throw new OrderNotFoundException("Order with ID " + customerId + " not found.");
+            throw new CustomerNotFoundException("Customer with ID " + customerId + " not found.");
         }
     }
 	
@@ -67,18 +69,40 @@ public class CustomersService {
 		
 		if(customersDAO.existsById(customerId)) {
 		
-		return orderDAO.findByCustomerCustomerId(customerId);
+			List<Orders> ol = orderDAO.findByCustomerCustomerId(customerId);
+			
+			if(ol.isEmpty()) {
+				
+				throw new EmptyListException("No orders placed by customer with ID " +customerId);
+				
+			}
+			return ol;
 		
 		}else {
 			
-			throw new RuntimeException("Customer not found");
+			throw new CustomerNotFoundException("Customer not found");
 			
 		}
 		
 	}
 	
 	public List<Ratings> getReviewsByCustomer(int customerId) {
-   	 return ratingsDAO.findRatingsByCustomerId(customerId); 
+		if(customersDAO.existsById(customerId)) {
+			
+		List<Ratings> rl = ratingsDAO.findRatingsByCustomerId(customerId); 
+		if(rl.isEmpty()) {
+			
+			throw new EmptyListException("No reviews submitted by customer with ID " +customerId);
+			
+		}
+		return rl;
+	
+	}
+		else {
+		
+		throw new CustomerNotFoundException("Customer not found");
+		
    }
 	
+	}
 }

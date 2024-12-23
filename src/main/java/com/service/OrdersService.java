@@ -10,6 +10,7 @@ import com.DAO.CustomersDAO;
 import com.DAO.DeliveryDriverDAO;
 import com.DAO.OrdersDAO;
 import com.DAO.RestaurantsDAO;
+import com.exception.CustomerNotFoundException;
 import com.exception.DriverNotFoundException;
 import com.exception.OrderNotFoundException;
 import com.model.Customers;
@@ -64,7 +65,7 @@ public class OrdersService {
        Optional <Customers> customer = customerDAO.findById(order.getCustomer().getCustomerId());
        
        if(!customer.isPresent()) {
-                 new DriverNotFoundException("Customer not found with id: " + order.getCustomer().getCustomerId());
+                throw new CustomerNotFoundException("Customer not found with id: " + order.getCustomer().getCustomerId());
        }else {
         
         order.setCustomer(customer.get());
