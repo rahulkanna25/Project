@@ -1,6 +1,7 @@
 package com.security.Security1;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -32,7 +33,6 @@ import com.service.CustomUserDetailsService;
 @EntityScan("com.model")
 @EnableJpaRepositories("com.dao")
 @EnableWebSecurity
-
 public class Security1Application {
 
 	public static void main(String[] args) {

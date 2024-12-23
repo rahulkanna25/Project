@@ -20,11 +20,9 @@ import java.util.List;
 public class RestaurantsController {
  
     @Autowired
-
     private RestaurantsService restaurantsService;
  
     @GetMapping
-
     public ResponseEntity<Object> getAllRestaurants() {
 
         List<Restaurants> restaurants = restaurantsService.getAllRestaurants();
@@ -40,7 +38,6 @@ public class RestaurantsController {
     }
  
     @GetMapping("/{restaurantId}")
-
     public ResponseEntity<Object> getRestaurantById(@PathVariable int restaurantId) {
 
         Restaurants restaurant = restaurantsService.getRestaurantById(restaurantId);
@@ -96,9 +93,9 @@ public class RestaurantsController {
 
     public ResponseEntity<Object> getMenuByRestaurant(@PathVariable int restaurantId) {
     	
-    	restaurantsService.getMenu(restaurantId);
+    	
 
-        return ResponseEntity.ok("{\"message\": \"Menu items for restaurant retrieved successfully\"}");
+        return ResponseEntity.ok(restaurantsService.getMenu(restaurantId));
 
     }
  
