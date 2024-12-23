@@ -106,9 +106,9 @@ public class RestaurantsController {
 
     public ResponseEntity<Object> getReviewsByRestaurant(@PathVariable int restaurantId) {
     	
-    	restaurantsService.getRatings(restaurantId);
+    	
 
-        return ResponseEntity.ok("{\"message\": \"Reviews for the restaurant retrieved successfully\"}");
+        return ResponseEntity.ok(restaurantsService.getRatings(restaurantId));
 
     }
  
@@ -116,7 +116,7 @@ public class RestaurantsController {
 
     public ResponseEntity<Object> getDeliveryAreasByRestaurant(@PathVariable int restaurantId) {
 
-        return ResponseEntity.ok("{\"message\": \"Delivery areas for the restaurant retrieved successfully\"}");
+        return ResponseEntity.ok(restaurantsService.getAddresses(restaurantId));
 
     }
 

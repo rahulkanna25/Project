@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.DAO.CustomersDAO;
 import com.DAO.OrdersDAO;
+import com.DAO.RatingsDAO;
 import com.exception.OrderNotFoundException;
 import com.model.Customers;
 import com.model.Orders;
+import com.model.Ratings;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,10 @@ public class CustomersService {
     
     @Autowired
     private OrdersDAO orderDAO;
+    
+    
+    @Autowired
+    RatingsDAO ratingsDAO;
     
 
     public List<Customers> getAllCustomers() {
@@ -70,5 +76,9 @@ public class CustomersService {
 		}
 		
 	}
+	
+	public List<Ratings> getReviewsByCustomer(int customerId) {
+   	 return ratingsDAO.findRatingsByCustomerId(customerId); 
+   }
 	
 }

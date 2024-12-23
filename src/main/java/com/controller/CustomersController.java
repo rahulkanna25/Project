@@ -2,11 +2,14 @@ package com.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.model.Customers;
 import com.model.Orders;
+import com.model.Ratings;
 import com.service.CustomersService;
 
 import java.util.List;
@@ -18,8 +21,8 @@ public class CustomersController {
 
     @Autowired
     private CustomersService customersService;
- 
-
+    
+    
     @GetMapping
     public List<Customers> getAllCustomers() {
         return customersService.getAllCustomers();
@@ -50,6 +53,17 @@ public class CustomersController {
     	 try {
              List<Orders> ol = customersService.getOrdersByCustomerId(customerId);
              return new ResponseEntity<List<Orders>>(ol,HttpStatus.OK);
+         } catch (RuntimeException e) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No reviews found");
+         }
+        
+    }
+    
+    @GetMapping("/{customerId}/reviews")
+    public ResponseEntity<?> getRatingsByCustomerId(@PathVariable int customerId) {
+    	 try {
+             List<Ratings> rl = customersService.getReviewsByCustomer(customerId);
+             return new ResponseEntity<List<Ratings>>(rl,HttpStatus.OK);
          } catch (RuntimeException e) {
              return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
          }

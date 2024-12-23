@@ -27,12 +27,12 @@ public class Customers {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Orders> orders;
 
-    // No-argument constructor
+    
     public Customers() {
         super();
     }
 
-    // All-argument constructor
+    
     public Customers(int customerId, String customerName, String customerEmail, String customerPhone,
                      List<DeliveryAddress> deliveryAddresses, List<Orders> orders) {
         this.customerId = customerId;
@@ -43,7 +43,7 @@ public class Customers {
         this.orders = orders;
     }
 
-    // Getters and Setters
+    
     public int getCustomerId() {
         return customerId;
     }

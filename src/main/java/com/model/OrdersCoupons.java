@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
-@Entity
+@Embeddable
 public class OrdersCoupons implements Serializable {
     @Id
     @Column(name = "order_id", nullable = false)
     private int orderId;
-    
+    @Id
     @Column(name = "coupon_id", nullable = false)
     private int couponId;
 

@@ -1,16 +1,16 @@
 package com.service;
  
 import java.util.List;
-
 import java.util.Optional;
- 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.DAO.DeliveryAddressDAO;
 import com.DAO.MenuItemsDAO;
 import com.DAO.RatingsDAO;
 import com.DAO.RestaurantsDAO;
 import com.exception.EmptyListException;
+import com.model.DeliveryAddress;
 import com.model.MenuItems;
 import com.model.Ratings;
 import com.model.Restaurants;
@@ -20,6 +20,10 @@ public class RestaurantsService {
  
     @Autowired
     private RestaurantsDAO restaurantsDAO;
+    
+    
+    @Autowired
+    private DeliveryAddressDAO deliveryAddressDAO; 
     
     
     @Autowired
@@ -81,4 +85,17 @@ public class RestaurantsService {
   	  return Reviews;
   		   
   	   }
+    
+    
+    public List<DeliveryAddress> getAddresses(int restaurantId){
+		  List<DeliveryAddress> address = deliveryAddressDAO.findAddressByRestaurantId(restaurantId);
+		  
+		  if(address.isEmpty()) {
+			  throw new EmptyListException("No reviews available");
+		  }
+		  return address;
+			   
+		   }
+	   
+ 
 }
