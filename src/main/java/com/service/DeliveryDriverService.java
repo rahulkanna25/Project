@@ -59,12 +59,12 @@ public class DeliveryDriverService {
 		   
 		   throw new DriverNotFoundException("No Driver Exists");
 	   }
-<<<<<<< HEAD
+
 		   DeliveryDrivers Driver = deliveryDriver.get();   
 	   
-=======
-	   DeliveryDrivers Driver = deliveryDriver.get();   
->>>>>>> d786bd89d9c99c8aff1c3b01f7bedce1b391f68f
+
+	    
+
 	   if(!order.isPresent()) {
 		   
 		   throw new OrderNotFoundException("No Order Exists");
@@ -73,10 +73,9 @@ public class DeliveryDriverService {
 	   
 	   Orders updatedOrder = order.get();
 	   
-<<<<<<< HEAD
+
 	  
-=======
->>>>>>> d786bd89d9c99c8aff1c3b01f7bedce1b391f68f
+
 	   updatedOrder.setDeliveryDriver(Driver);
 	   ordersDAO.save(updatedOrder);    
 	    
