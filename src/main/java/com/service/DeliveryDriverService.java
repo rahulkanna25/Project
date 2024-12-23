@@ -80,7 +80,7 @@ public class DeliveryDriverService {
 			   throw new DriverNotFoundException("No Driver Exists");
 		   }
 		
-		List<Orders> ol = ordersDAO.findByDeliveryDriversDriverid(driverId);
+		List<Orders> ol = ordersDAO.findByDeliveryDriverDriverid(driverId);
 		
 		if(ol.isEmpty()){
 			

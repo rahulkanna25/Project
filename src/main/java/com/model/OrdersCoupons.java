@@ -1,69 +1,52 @@
 package com.model;
 
-import java.io.Serializable;
-import java.util.Objects;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Id;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 
-@Embeddable
-public class OrdersCoupons implements Serializable {
-    @Id
-    @Column(name = "order_id", nullable = false)
-    private int orderId;
-    @Id
-    @Column(name = "coupon_id", nullable = false)
-    private int couponId;
+@Entity
+public class OrdersCoupons {
+	
+	@EmbeddedId
+    private OrdersCouponsId id;
+	
+	
+	@ManyToOne
+	@MapsId("orderId")
+    @JoinColumn(name = "order_id")
+    private Orders orders;
 
-    // No-argument constructor
-    public OrdersCoupons() {
-        super();
-    }
+    @ManyToOne
+    @MapsId("couponId")
+    @JoinColumn(name = "coupon_id")
+    private Coupons coupons;
 
-    // All-argument constructor
-    public OrdersCoupons(int orderId, int couponId) {
-        this.orderId = orderId;
-        this.couponId = couponId;
-    }
+	public OrdersCouponsId getId() {
+		return id;
+	}
 
-    // Getters and Setters
-    public int getOrderId() {
-        return orderId;
-    }
+	public void setId(OrdersCouponsId id) {
+		this.id = id;
+	}
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
+	public Orders getOrders() {
+		return orders;
+	}
 
-    public int getCouponId() {
-        return couponId;
-    }
+	public void setOrders(Orders orders) {
+		this.orders = orders;
+	}
 
-    public void setCouponId(int couponId) {
-        this.couponId = couponId;
-    }
+	public Coupons getCoupons() {
+		return coupons;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(couponId, orderId);
-    }
+	public void setCoupons(Coupons coupons) {
+		this.coupons = coupons;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        OrdersCoupons other = (OrdersCoupons) obj;
-        return couponId == other.couponId && orderId == other.orderId;
-    }
 
-   // toString method
-   @Override
-   public String toString() {
-       return "OrdersCoupons{" +
-               "orderId=" + orderId +
-               ", couponId=" + couponId +
-               '}';
-   }
+
 }
