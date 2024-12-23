@@ -1,18 +1,19 @@
 package com.service;
 
-<<<<<<< HEAD
 
-
-=======
 import com.model.Customers;
+
 import com.model.Orders;
 import com.DAO.OrdersDAO; // Import your OrdersDAO
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
+
 import com.DAO.CustomersDAO;
 import com.DAO.DeliveryDriverDAO;
 import com.DAO.OrdersDAO;
@@ -26,16 +27,12 @@ import com.model.DeliveryDrivers;
 import com.model.Orders;
 import com.model.Restaurants;
 
-=======
-import java.util.List;
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
-import java.util.Optional;
 
 @Service
 public class OrdersService {
 
     @Autowired
-<<<<<<< HEAD
+
     private OrdersDAO ordersDAO;
     
     @Autowired
@@ -55,11 +52,11 @@ public class OrdersService {
 
     public Orders addOrder(Orders order) {
     	
-    Optional <DeliveryDrivers> driver = deliveryDriverDAO.findById(order.getDeliveryDriver().getDriver_id());
+    Optional <DeliveryDrivers> driver = deliveryDriverDAO.findById(order.getDeliveryDriver().getDriverId());
                 if(!driver.isPresent()) {
                 
                 
-                throw new DriverNotFoundException("Driver not found with id: " + order.getDeliveryDriver().getDriver_id());
+                throw new DriverNotFoundException("Driver not found with id: " + order.getDeliveryDriver().getDriverId());
                 }
                    else {
         
@@ -108,46 +105,21 @@ public class OrdersService {
             return ordersDAO.save(order);
         } else {
             throw new OrderNotFoundException("Order with ID " + orderId + " not found.");
-=======
-    private OrdersDAO ordersDAO; 
 
-    public Orders placeOrder(Orders order) {
-        return ordersDAO.save(order); 
-    }
-
-    public Optional<Orders> getOrderById(int orderId) {
-        return ordersDAO.findById(orderId);
-    }
-
-    public Orders updateOrderStatus(int orderId, String newStatus) {
-        Optional<Orders> optionalOrder = ordersDAO.findById(orderId);
-        if (optionalOrder.isPresent()) {
-            Orders order = optionalOrder.get();
-            order.setOrderStatus(newStatus); 
-            return ordersDAO.save(order); // Save updated order
-        } else {
-            throw new RuntimeException("Order not found"); // Handle case where order does not exist
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
         }
     }
-
+        
     public void cancelOrder(int orderId) {
         if (ordersDAO.existsById(orderId)) {
-<<<<<<< HEAD
+
             ordersDAO.deleteById(orderId);
         } else {
             throw new OrderNotFoundException("Order with ID " + orderId + " not found.");
         }
     }
-=======
-            ordersDAO.deleteById(orderId); // Delete the order from the database
-        } else {
-            throw new RuntimeException("Order not found"); // Handle case where order does not exist
-        }
-    }
-    
+
     public List<Orders> getCustomer(int customerId){
     	return ordersDAO.findByCustomer_CustomerId(customerId);
     }
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+
 }

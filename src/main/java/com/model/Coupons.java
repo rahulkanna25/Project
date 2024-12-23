@@ -3,6 +3,7 @@ package com.model;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "coupons")
@@ -22,10 +23,10 @@ public class Coupons {
     @Column(name = "expiry_date", nullable = false)
     private Date expiryDate;
 
-<<<<<<< HEAD
+
     @OneToMany(mappedBy = "coupons", cascade = CascadeType.ALL)
    private List<OrdersCoupons> ordersCoupons;
-=======
+
     public Coupons() {}
 
     public Coupons(int couponId, String couponCode, float discountAmount, Date expiryDate) {
@@ -66,5 +67,5 @@ public class Coupons {
     public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
     }
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+
 }

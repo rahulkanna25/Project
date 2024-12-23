@@ -1,8 +1,9 @@
 package com.sprint.Project1;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.SpringApplication;
-<<<<<<< HEAD
+
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -15,17 +16,7 @@ import com.filter.JwtFilter;
 import com.service.CustomUserDetailsService;
 
 
-@SpringBootApplication(scanBasePackages="com.controller,com.service")
-@EnableJpaRepositories(basePackages = "com.dao")
-@EntityScan(basePackages = "com.model")
 
-=======
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -43,28 +34,17 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import com.DAO.*;
-import com.filter.JwtFilter;
-import com.service.CustomUserDetailsService;
 
 @SpringBootApplication(scanBasePackages={"com.controller","com.service","com.filter,com.initializer,com.exception"})
 @EntityScan("com.model")
 @EnableJpaRepositories("com.dao")
 @EnableWebSecurity
-
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
 public class Project1Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Project1Application.class, args);
-		
-<<<<<<< HEAD
-		
-		 
-		
+		SpringApplication.run(Project1Application.class,args);
 	}
-=======
-	}
-	 
+	
 	
 	@Bean
 	@DependsOn("userDetailsService")
@@ -148,6 +128,9 @@ public class Project1Application {
 	
 	        
 	    return http.build();
+	
 	}
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+	
+	
+
 }

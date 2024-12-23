@@ -73,7 +73,7 @@ public class RestaurantsServiceTest {
 
         when(restaurantsDAO.findById(1)).thenReturn(Optional.of(restaurant));
 
-        Restaurants result = restaurantsService.getRestaurantById(1);
+        Restaurants result = restaurantsService.getRestaurantById(1).get();
 
         assertEquals(restaurant, result);
         verify(restaurantsDAO, times(1)).findById(1);
@@ -90,7 +90,7 @@ public class RestaurantsServiceTest {
     public void testSaveRestaurant() {
         Restaurants restaurant = new Restaurants();
 
-        restaurantsService.saveRestaurant(restaurant);
+        restaurantsService.createRestaurant(restaurant);
 
         verify(restaurantsDAO, times(1)).save(restaurant);
     }

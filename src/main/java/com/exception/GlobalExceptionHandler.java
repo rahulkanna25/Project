@@ -1,9 +1,6 @@
 package com.exception;
-<<<<<<< HEAD
-import java.time.LocalDateTime;
 
-=======
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,7 +23,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(response);
     }
-<<<<<<< HEAD
+
     
     @ExceptionHandler(DriverNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleException(DriverNotFoundException exe)
@@ -75,19 +72,8 @@ public class GlobalExceptionHandler {
 		err.setMessage( exe.getMessage());
 		return new ResponseEntity<ErrorResponse>(err,HttpStatus.NOT_FOUND);
 	}
-	@ExceptionHandler()
-	public ResponseEntity<ErrorResponse> handleException(Exception exe)
-	{
-		ErrorResponse err= new ErrorResponse();
-	    err.setTimestamp(LocalDateTime.now());
-		err.setStatus( HttpStatus.BAD_REQUEST);
-		err.setMessage( exe.getMessage());
-		return new ResponseEntity<ErrorResponse>(err,HttpStatus.BAD_REQUEST);
-	}
 	
 
+
 }
 
-=======
-}
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc

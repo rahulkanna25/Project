@@ -32,8 +32,7 @@ public class DeliveryAddress {
     @Column(name = "postal_code", length = 20, nullable = false)
     private String postalCode;
     
-    @OneToMany(mappedBy = "deliveryAddress")
-    private List<Orders> orders;
+    
 
     public DeliveryAddress() {}
 

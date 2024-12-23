@@ -23,14 +23,8 @@ public class OrderItems {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    
+  
 
-<<<<<<< HEAD
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Orders order;
-}
-=======
     public OrderItems() {}
 
 
@@ -82,4 +76,4 @@ public class OrderItems {
 	}
 
 }
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+

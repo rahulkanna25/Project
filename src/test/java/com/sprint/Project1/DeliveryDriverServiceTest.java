@@ -120,12 +120,12 @@ public class DeliveryDriverServiceTest {
         orders.add(new Orders());
 
         when(deliveryDriverDAO.findById(1)).thenReturn(Optional.of(driver));
-        when(ordersDAO.findByDeliveryDriverDriverid(1)).thenReturn(orders);
+        when(ordersDAO.findByDeliveryDriver_DriverId(1)).thenReturn(orders);
 
         List<Orders> result = deliveryDriverService.allOrders(1);
 
         assertEquals(1, result.size());
-        verify(ordersDAO, times(1)).findByDeliveryDriverDriverid(1);
+        verify(ordersDAO, times(1)).findByDeliveryDriver_DriverId(1);
     }
 
     @Test
@@ -133,7 +133,7 @@ public class DeliveryDriverServiceTest {
         DeliveryDrivers driver = new DeliveryDrivers();
 
         when(deliveryDriverDAO.findById(1)).thenReturn(Optional.of(driver));
-        when(ordersDAO.findByDeliveryDriverDriverid(1)).thenReturn(new ArrayList<>());
+        when(ordersDAO.findByDeliveryDriver_DriverId(1)).thenReturn(new ArrayList<>());
 
         assertThrows(EmptyListException.class, () -> deliveryDriverService.allOrders(1));
     }

@@ -9,11 +9,11 @@ public class MenuItems {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-<<<<<<< HEAD
-    @Column(name = "menu_item_id")
-=======
+
+    
+
     @Column(name = "item_id")
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+
     private int menuItemId;
 
     @ManyToOne

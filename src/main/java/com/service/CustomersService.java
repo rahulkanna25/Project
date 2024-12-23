@@ -1,36 +1,21 @@
 package com.service;
 
-<<<<<<< HEAD
+import java.util.List;
+import java.util.Optional;
 
-
-=======
-import com.model.Customers;
-import com.DAO.CustomersDAO; // Import your CustomersDAO
-import com.DAO.OrdersDAO;
-import com.DAO.RatingsDAO;
-import com.model.Orders; // Assuming you have an Orders class
-import com.model.Ratings; // Assuming you have a Ratings class
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
-<<<<<<< HEAD
 import com.DAO.CustomersDAO;
 import com.DAO.OrdersDAO;
 import com.DAO.RatingsDAO;
+import com.DAO.RestaurantsDAO;
 import com.exception.CustomerNotFoundException;
 import com.exception.EmptyListException;
-import com.exception.OrderNotFoundException;
 import com.model.Customers;
 import com.model.Orders;
 import com.model.Ratings;
-
-=======
-import java.util.ArrayList;
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
-import java.util.List;
-import java.util.Optional;
+import com.model.Restaurants;
 
 @Service
 public class CustomersService {
@@ -38,21 +23,21 @@ public class CustomersService {
     @Autowired
     private CustomersDAO customersDAO;
     
-<<<<<<< HEAD
+
     
     @Autowired
     private OrdersDAO orderDAO;
     
-    
     @Autowired
-    RatingsDAO ratingsDAO;
+    RestaurantsDAO restaurantDAO;
     
-=======
+    
+    
     @Autowired
     private RatingsDAO ratingsDAO;
     @Autowired
     private OrdersDAO ordersDAO;
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+
 
     public List<Customers> getAllCustomers() {
         return customersDAO.findAll(); 
@@ -62,23 +47,14 @@ public class CustomersService {
         return customersDAO.findById(customerId);
     }
 
-<<<<<<< HEAD
+
 
     public void deleteCustomer(int id) {
         if (customersDAO.existsById(id)) {
             customersDAO.deleteById(id);
-=======
-    public Customers updateCustomer(int customerId, Customers updatedCustomer) {
-        if (customersDAO.existsById(customerId)) {
-            updatedCustomer.setCustomerId(customerId); 
-            return customersDAO.save(updatedCustomer); 
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
-        } else {
-            throw new CustomerNotFoundException("Customer not found");
         }
     }
 
-<<<<<<< HEAD
 	public Customers updateCustomer(int customerId, Customers customerDetails) {
 		
 		Optional<Customers> existingCustomer = customersDAO.findById(customerId);
@@ -98,7 +74,7 @@ public class CustomersService {
 		
 		if(customersDAO.existsById(customerId)) {
 		
-			List<Orders> ol = orderDAO.findByCustomerCustomerId(customerId);
+			List<Orders> ol = orderDAO.findByCustomer_CustomerId(customerId);
 			
 			if(ol.isEmpty()) {
 				
@@ -134,28 +110,53 @@ public class CustomersService {
    }
 	
 	}
-=======
-    public void deleteCustomer(int customerId) {
-        if (customersDAO.existsById(customerId)) {
-            customersDAO.deleteById(customerId); 
-        } else {
-            throw new RuntimeException("Customer not found"); 
-        }
-    }
+	
+	
 
-   /* public List<Orders> getOrdersByCustomer(int customerId) {
-    }*/
-    public List<Ratings> getReviewsByCustomer(int customerId) {
-    	List<Orders> orderslist = ordersDAO.findByCustomer_CustomerId(customerId);         
-    	List<Ratings> ratingList = new ArrayList<>();
-    	for(Orders o: orderslist) {
-    		ratingList.addAll(ratingsDAO.findByOrderId(o.getOrderId()));
-    	}
-    	return ratingList;
-    }
+	    
+	    public List<Restaurants> addFavoriteRestaurant(int customerId, Restaurants restaurant) {
+	        
+	        Optional<Customers> customerOpt = customersDAO.findById(customerId);
+	        
+
+	        if (customerOpt.isPresent()) {
+	            Customers customer = customerOpt.get();
+
+	            customer.getFavouriteRestaurants().add(restaurant);
+	            customersDAO.save(customer); 
+	            return customer.getFavouriteRestaurants();
+	            
+	        } else {
+	            throw new CustomerNotFoundException("Customer not found!");
+	        }
+	    }
+
+	    
+	    public String removeFavoriteRestaurant(int customerId, int restaurantId) {
+	        Optional<Customers> customerOpt = customersDAO.findById(customerId);
+	        Optional<Restaurants> restaurantOpt = restaurantDAO.findById(restaurantId);
+
+	        if (customerOpt.isPresent() && restaurantOpt.isPresent()) {
+	            Customers customer = customerOpt.get();
+	            Restaurants restaurant = restaurantOpt.get();
+
+	            
+	            customer.getFavouriteRestaurants().remove(restaurant);
+	            customersDAO.save(customer); 
+
+	            return "Restaurant removed from favorites successfully!";
+	        } else {
+	            throw new CustomerNotFoundException("Customer or Restaurant doesn't exists");
+	        }
+	    }
+	
+
+   
+    
+
+}  
 
     
 
-    
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
-}
+
+

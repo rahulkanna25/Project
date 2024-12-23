@@ -22,19 +22,18 @@ public class Restaurants {
     @Column(name="restaurant_phone", nullable=false)
     private String restaurantPhone;
 
-<<<<<<< HEAD
+
    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
    private List<MenuItems> menuItems;
 
-=======
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private Set<MenuItems> menuItems;
+
+    
     
     @ManyToOne
     @JoinColumn(name = "delivery_address_id")
     private DeliveryAddress deliveryAddress;
     
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Orders> orders;
 
@@ -73,13 +72,7 @@ public class Restaurants {
         this.restaurantPhone = restaurantPhone;
     }
 
-    public Set<MenuItems> getMenuItems() {
-        return menuItems;
-    }
-
-    public void setMenuItems(Set<MenuItems> menuItems) {
-        this.menuItems = menuItems;
-    }
+    
 
     public List<Orders> getOrders() {
         return orders;

@@ -25,7 +25,14 @@ public class Customers {
     @JsonManagedReference
     private List<Orders> orders;
 
-<<<<<<< HEAD
+    
+    @ManyToMany
+    @JoinTable(
+        name = "customer_favorite_restaurant", 
+        joinColumns = @JoinColumn(name = "customer_id"), 
+        inverseJoinColumns = @JoinColumn(name = "restaurant_id") 
+    )
+    List<Restaurants> favouriteRestaurants;
     
     public Customers() {
         super();
@@ -33,23 +40,20 @@ public class Customers {
 
     
     public Customers(int customerId, String customerName, String customerEmail, String customerPhone,
-                     List<DeliveryAddress> deliveryAddresses, List<Orders> orders) {
+                      List<Orders> orders) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
         this.customerPhone = customerPhone;
-        this.deliveryAddresses = deliveryAddresses;
+        
         this.orders = orders;
     }
 
     
-    public int getCustomerId() {
-=======
-    public Customers() {}
-
+    
     // Getters and Setters
     public Integer getCustomerId() {
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+
         return customerId;
     }
 
@@ -81,7 +85,17 @@ public class Customers {
         this.customerPhone = customerPhone;
     }
 
-    public List<Orders> getOrders() {
+    public List<Restaurants> getFavouriteRestaurants() {
+		return favouriteRestaurants;
+	}
+
+
+	public void setFavouriteRestaurants(List<Restaurants> favouriteRestaurants) {
+		this.favouriteRestaurants = favouriteRestaurants;
+	}
+
+
+	public List<Orders> getOrders() {
         return orders;
     }
 

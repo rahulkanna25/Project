@@ -1,13 +1,14 @@
 package com.controller;
 
-<<<<<<< HEAD
-=======
+
 import com.model.Customers;
+
 import com.model.Orders;
 import com.model.Ratings;
+import com.model.Restaurants;
 import com.service.CustomersService;
 import com.service.RatingsService;
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,10 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.model.Customers;
-import com.model.Orders;
-import com.model.Ratings;
-import com.service.CustomersService;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,16 +25,13 @@ import java.util.Optional;
 public class CustomersController {
 
     @Autowired
-<<<<<<< HEAD
+
     private CustomersService customersService;
     
-    
-=======
-    private CustomersService customersService; 
     @Autowired
     private RatingsService ratingsService;
 
->>>>>>> c12262b9a5211b95b4081a588f65eec670f2bdbc
+
     @GetMapping
     public ResponseEntity<List<Customers>> getAllCustomers() {
         List<Customers> customers = customersService.getAllCustomers();
@@ -76,17 +70,7 @@ public class CustomersController {
              return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No reviews found");
          }
         
-    }
     
-    @GetMapping("/{customerId}/reviews")
-    public ResponseEntity<?> getRatingsByCustomerId(@PathVariable int customerId) {
-    	 try {
-             List<Ratings> rl = customersService.getReviewsByCustomer(customerId);
-             return new ResponseEntity<List<Ratings>>(rl,HttpStatus.OK);
-         } catch (RuntimeException e) {
-             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
-         }
-        
     }
     
     
@@ -103,11 +87,7 @@ public class CustomersController {
         }
     }
 
-   /* @GetMapping("/{customerId}/orders")
-    public ResponseEntity<List<Orders>> getOrdersByCustomer(@PathVariable int customerId) {
-        List<Orders> orders = customersService.getOrdersByCustomer(customerId);
-        return ResponseEntity.ok(orders);
-    }*/
+   
 
     @GetMapping("/{customerId}/reviews")
     public ResponseEntity<List<Ratings>> getReviewsByCustomer(@PathVariable int customerId) {
@@ -115,6 +95,25 @@ public class CustomersController {
         return ResponseEntity.ok(reviews);
     }
     
+    @PostMapping("/{customerId}/favorites")
+    public ResponseEntity<?> addFavoriteRestaurant( @PathVariable int customerId, @RequestBody Restaurants restaurant) {
+
+        List<Restaurants> response = customersService.addFavoriteRestaurant(customerId, restaurant);
+        return ResponseEntity.ok(response);
+    }
+
+    
+    @DeleteMapping("/{customerId}/favorites/{restaurantId}")
+    public ResponseEntity<String> removeFavoriteRestaurant(
+            @PathVariable int customerId,
+            @PathVariable int restaurantId) {
+    	
+    	String response = customersService.removeFavoriteRestaurant(customerId, restaurantId);
+        return ResponseEntity.ok(response);
+    }
+    }
+
+    
 
   
-}
+
