@@ -1,8 +1,11 @@
 package com.exception;
-
 import java.time.LocalDateTime;
 
 
+=======
+import java.time.LocalDateTime;
+
+>>>>>>> 8369f0426e4e1a499eb6177aaa8fdcb7ff2c5e53
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,6 +31,7 @@ public class GlobalExceptionHandler {
 
     
     @ExceptionHandler(DriverNotFoundException.class)
+
 	public ResponseEntity<ErrorResponse> handleException(DriverNotFoundException exe)
 	{
 		ErrorResponse err= new ErrorResponse();
@@ -56,6 +60,7 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<ErrorResponse>(err,HttpStatus.NOT_FOUND);
 	}
 	
+
 	@ExceptionHandler(CustomerNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleException(CustomerNotFoundException exe)
 	{
@@ -86,4 +91,5 @@ public class GlobalExceptionHandler {
 	
 
 }
+
 

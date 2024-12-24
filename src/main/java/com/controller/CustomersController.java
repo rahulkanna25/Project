@@ -1,13 +1,14 @@
 package com.controller;
 
-<<<<<<< HEAD
-=======
+import com.exception.CustomerNotFoundException;
+
 import com.model.Customers;
 import com.model.Orders;
 import com.model.Ratings;
+import com.model.Restaurants;
 import com.service.CustomersService;
 import com.service.RatingsService;
->>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,16 +29,15 @@ import java.util.Optional;
 public class CustomersController {
 
     @Autowired
-<<<<<<< HEAD
+
     private CustomersService customersService;
     
-    
-=======
+
     private CustomersService customersService; 
     @Autowired
     private RatingsService ratingsService;
 
->>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+
     @GetMapping
     public ResponseEntity<List<Customers>> getAllCustomers() {
         List<Customers> customers = customersService.getAllCustomers();
@@ -68,7 +68,7 @@ public class CustomersController {
     }
     
     @GetMapping("/{customerId}/orders")
-    public ResponseEntity<?> getOrdersByCustomerId(@PathVariable int customerId) {
+    public ResponseEntity<?> getOrdersByCustomerId1(@PathVariable int customerId) {
     	 try {
              List<Orders> ol = customersService.getOrdersByCustomerId(customerId);
              return new ResponseEntity<List<Orders>>(ol,HttpStatus.OK);
@@ -103,18 +103,46 @@ public class CustomersController {
         }
     }
 
-   /* @GetMapping("/{customerId}/orders")
-    public ResponseEntity<List<Orders>> getOrdersByCustomer(@PathVariable int customerId) {
-        List<Orders> orders = customersService.getOrdersByCustomer(customerId);
-        return ResponseEntity.ok(orders);
-    }*/
+    @GetMapping("/{customerId}/orders")
+    public ResponseEntity<?> getOrdersByCustomerId(@PathVariable int customerId) {
+    	 try {
+             List<Orders> ol = customersService.getOrdersByCustomerId(customerId);
+             return new ResponseEntity<List<Orders>>(ol,HttpStatus.OK);
+         } catch (RuntimeException e) {
+             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No reviews found");
+         }
+        
+    
+    }
 
     @GetMapping("/{customerId}/reviews")
     public ResponseEntity<List<Ratings>> getReviewsByCustomer(@PathVariable int customerId) {
         List<Ratings> reviews = customersService.getReviewsByCustomer(customerId);
         return ResponseEntity.ok(reviews);
     }
+    @PostMapping("/{customerId}/favorites")
+    public ResponseEntity<String> addFavoriteRestaurant(@PathVariable int customerId, @RequestBody Restaurants restaurant) {
+        try {
+            customersService.addFavoriteRestaurant(customerId, restaurant);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Restaurant added to favorites successfully.");
+        } catch (CustomerNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while adding the restaurant to favorites.");
+        }
+    }
+ 
+    
+    @DeleteMapping("/{customerId}/favorites/{restaurantId}")
+    public ResponseEntity<String> removeFavoriteRestaurant(
+            @PathVariable int customerId,
+            @PathVariable int restaurantId) {
+    	
+    	String response = customersService.removeFavoriteRestaurant(customerId, restaurantId);
+        return ResponseEntity.ok(response);
+    }
+    }
     
 
   
-}
+

@@ -11,13 +11,10 @@ import com.model.Orders;
 import com.model.Ratings;
 @Repository
 public interface OrdersDAO extends JpaRepository<Orders, Integer>{
-<<<<<<< HEAD
+
 	List<Orders> findByDeliveryDriverDriverid(int driverid);
 	
 	List<Orders> findByCustomerCustomerId(int customerid);
- 
-}
-=======
 
 	  //List<Orders> findByDeliveryDriver_DriverId(int driverId);
 	    List<Orders> findByCustomer_CustomerId(int customerId);
@@ -26,4 +23,4 @@ public interface OrdersDAO extends JpaRepository<Orders, Integer>{
 	    List<Orders> findByRestaurant_RestaurantId(int restaurantId);
 
 	  }
->>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+

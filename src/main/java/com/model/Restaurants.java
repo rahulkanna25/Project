@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "restaurants")
 public class Restaurants {
@@ -30,6 +32,7 @@ public class Restaurants {
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private Set<MenuItems> menuItems;
     
+    
     @ManyToOne
     @JoinColumn(name = "delivery_address_id")
     private DeliveryAddress deliveryAddress;
@@ -37,7 +40,7 @@ public class Restaurants {
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Orders> orders;
-
+    
     public Restaurants() {}
 
     // Getters and Setters

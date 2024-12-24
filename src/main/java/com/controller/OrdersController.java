@@ -3,24 +3,20 @@ package com.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.model.Orders;
 import com.service.OrdersService;
-<<<<<<< HEAD
 
-
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
->>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+
 
 @RestController
 @RequestMapping("/api")
@@ -29,7 +25,7 @@ public class OrdersController {
     @Autowired
     private OrdersService ordersService; 
 
-<<<<<<< HEAD
+
     
     @PostMapping("/orders")
     public ResponseEntity<?> placeOrder(@RequestBody Orders order) {
@@ -69,7 +65,6 @@ public class OrdersController {
         
     }
 
-=======
     @PostMapping
     public ResponseEntity<Orders> placeOrder(@RequestBody Orders order) {
         Orders newOrder = ordersService.placeOrder(order);
@@ -108,5 +103,4 @@ public class OrdersController {
                     .body("{\"code\": \"DELETEFAIL\", \"message\": \"" + e.getMessage() + "\"}");
         }
     }
->>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
 }

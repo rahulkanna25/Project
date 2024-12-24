@@ -13,7 +13,7 @@ import com.model.Ratings;
 
 @Repository
 public interface RatingsDAO extends JpaRepository<Ratings, Integer>{
-<<<<<<< HEAD
+
 	
 	List<Ratings> findByRestaurant_restaurantId(int restaurantId);
 	
@@ -23,11 +23,8 @@ public interface RatingsDAO extends JpaRepository<Ratings, Integer>{
 	@Query("SELECT r FROM Ratings r JOIN r.order o WHERE o.customer.customerId = :customerId")
 	List<Ratings> findRatingsByCustomerId(@Param("customerId") int customerId);
 	
-}
 
 
-=======
-	@Query("SELECT r FROM Ratings r JOIN r.order o JOIN o.customer c WHERE c.customerId = :customerId")
-	List<Ratings> findByOrderId(int order);                  
+	
 }
->>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+
