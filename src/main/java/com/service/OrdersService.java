@@ -58,7 +58,10 @@ public class OrdersService {
             if(!restaurant.isPresent()) {
    
    
-                  throw new RestaurantNotFoundException("Restaurant not found with id: " + order.getRestaurant().getRestaurantId());
+
+               throw  new RestaurantNotFoundException("Restaurant not found with id: " + order.getRestaurant().getRestaurantId());
+
+                  
             }else {
         
         order.setRestaurant(restaurant.get());

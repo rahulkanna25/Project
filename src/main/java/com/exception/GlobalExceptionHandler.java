@@ -1,17 +1,30 @@
 package com.exception;
-
 import java.time.LocalDateTime;
-
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
-public class ExceptionHandling {
-	
-	@ExceptionHandler(DriverNotFoundException.class)
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<Object> handleCustomException(CustomException ex) {
+        Response response = new Response(ex.getCode(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(response);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleGenericException(Exception ex) {
+    	
+        Response response = new Response("SERVER_ERROR", "An unexpected error occurred");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(response);
+    }
+    
+    @ExceptionHandler(DriverNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleException(DriverNotFoundException exe)
 	{
 		ErrorResponse err= new ErrorResponse();
@@ -70,3 +83,4 @@ public class ExceptionHandling {
 	
 
 }
+
