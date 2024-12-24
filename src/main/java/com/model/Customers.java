@@ -25,6 +25,7 @@ public class Customers {
     @JsonManagedReference
     private List<Orders> orders;
     
+    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "customer_favorites",

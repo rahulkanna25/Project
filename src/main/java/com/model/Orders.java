@@ -23,7 +23,7 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
-	@JsonBackReference // Prevent recursion during serialization
+	@JsonBackReference 
 	private Restaurants restaurant;
 
 	@ManyToOne

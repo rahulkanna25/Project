@@ -99,42 +99,51 @@ public List<Orders> getOrdersByCustomerId(int customerId){
         }
         
         
-public void addFavoriteRestaurant(int customerId, Restaurants restaurant) {
-	        
-	        Optional<Customers> customerOpt = customersDAO.findById(customerId);
-	        
- 
-	        if (customerOpt.isPresent()) {
-	            Customers customer = customerOpt.get();
- 
-	            customer.getFavoriteRestaurants().add(restaurant);
-	            customersDAO.save(customer);
-	           
-	            
-	        } else {
-	            throw new CustomerNotFoundException("Customer not found!");
-	        }
-	    }
- 
-	    
-	    public String removeFavoriteRestaurant(int customerId, int restaurantId) {
-	        Optional<Customers> customerOpt = customersDAO.findById(customerId);
-	        Optional<Restaurants> restaurantOpt = restaurantsDAO.findById(restaurantId);
- 
-	        if (customerOpt.isPresent() && restaurantOpt.isPresent()) {
-	            Customers customer = customerOpt.get();
-	            Restaurants restaurant = restaurantOpt.get();
- 
-	            
-	            customer.getFavoriteRestaurants().remove(restaurant);
-	            customersDAO.save(customer);
- 
-	            return "Restaurant removed from favorites successfully!";
-	        } else {
-	            throw new CustomerNotFoundException("Customer or Restaurant doesn't exists");
-	        }
-	    }
-	
+        public void addFavoriteRestaurant(int customerId, Restaurants restaurant) {
+            
+            Optional<Customers> customerOpt = customersDAO.findById(customerId);
+            Optional<Restaurants> restaurantOpt = restaurantsDAO.findById(restaurant.getRestaurantId());
+            
+            System.out.println("Restaurant ID from request: " + restaurant.getRestaurantId());
+            
+     
+            if (!customerOpt.isPresent()) {
+            	throw new EmptyListException("Customer not found!");
+            	
+            }
+            if (!restaurantOpt.isPresent()) {
+            	throw new EmptyListException("restaurant not found!");
+            	
+            }else {
+            
+                Customers customer = customerOpt.get();
+                Restaurants restaurantobj  = restaurantOpt.get();
+     
+                customer.getFavoriteRestaurants().add(restaurantobj);
+                customersDAO.save(customer);
+               
+                
+            }
+        }
+     
+        
+        public String removeFavoriteRestaurant(int customerId, int restaurantId) {
+            Optional<Customers> customerOpt = customersDAO.findById(customerId);
+            Optional<Restaurants> restaurantOpt = restaurantsDAO.findById(restaurantId);
+     
+            if (customerOpt.isPresent() && restaurantOpt.isPresent()) {
+                Customers customer = customerOpt.get();
+                Restaurants restaurant = restaurantOpt.get();
+     
+                
+                customer.getFavoriteRestaurants().remove(restaurant);
+                customersDAO.save(customer);
+     
+                return "Restaurant removed from favorites successfully!";
+            } else {
+                throw new EmptyListException("Customer or Restaurant doesn't exists");
+            }
+        }
     }
 
 
