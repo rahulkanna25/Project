@@ -10,10 +10,18 @@ public class MenuItems {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
 <<<<<<< HEAD
+<<<<<<< HEAD
     @Column(name = "menu_item_id")
 =======
     @Column(name = "item_id")
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+    
+
+    @Column(name = "item_id")
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     private int menuItemId;
 
     @ManyToOne

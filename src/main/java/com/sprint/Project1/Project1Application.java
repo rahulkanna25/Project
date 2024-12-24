@@ -1,9 +1,13 @@
 package com.sprint.Project1;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.SpringApplication;
+
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+<<<<<<< HEAD
 <<<<<<< HEAD
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -12,10 +16,18 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "com.dao")
 @EntityScan(basePackages = "com.model")
 =======
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpMethod;
+
+import com.filter.JwtFilter;
+import com.service.CustomUserDetailsService;
+
+
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -33,21 +45,21 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 import com.DAO.*;
-import com.filter.JwtFilter;
-import com.service.CustomUserDetailsService;
 
 @SpringBootApplication(scanBasePackages={"com.controller","com.service","com.filter,com.initializer,com.exception"})
 @EntityScan("com.model")
 @EnableJpaRepositories("com.dao")
 @EnableWebSecurity
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 public class Project1Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Project1Application.class, args);
-		
+		SpringApplication.run(Project1Application.class,args);
 	}
-	 
+	
 	
 	@Bean
 	@DependsOn("userDetailsService")
@@ -85,10 +97,15 @@ public class Project1Application {
 	            
 	                .requestMatchers(HttpMethod.PUT,"/api/manager/register/*").hasRole("ADMIN")
 	                .requestMatchers("/api/user/register").permitAll() 
+
+	                .requestMatchers(HttpMethod.GET,"/api/restaurants").hasAnyRole("USER","MANAGER")
+	                .requestMatchers(HttpMethod.GET,"/api/restaurants/{restaurantId}").hasAnyRole("MANAGER","USER")
+
 	                .requestMatchers(HttpMethod.GET,"/api/restaurants").hasAnyRole("USER","MANAGER","ADMIN")
 	                .requestMatchers(HttpMethod.GET,"/api/restaurants/{restaurantId}").hasAnyRole("ADMIN","USER")
 	                .requestMatchers(HttpMethod.PUT,"/api/restaurants/{restaurantId}").hasAnyRole("MANAGER","ADMIN")
 	                .requestMatchers(HttpMethod.DELETE,"/api/restaurants/{restaurantId}").hasAnyRole("MANAGER","ADMIN")
+
 	                .requestMatchers(HttpMethod.POST,"/api/restaurants").hasAnyRole("ADMIN","MANAGER")
 		            .requestMatchers(HttpMethod.GET,"/api/restaurants/{restaurantId}/menu").hasAnyRole("ADMIN","USER")
 		            .requestMatchers(HttpMethod.GET,"/api/restaurants/{restaurantId}/reviews").hasAnyRole("USER")
@@ -134,5 +151,9 @@ public class Project1Application {
 	
 	        
 	    return http.build();
+	
 	}
+	
+	
+
 }

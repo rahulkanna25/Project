@@ -1,20 +1,32 @@
 package com.model;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+<<<<<<< HEAD
 =======
 import jakarta.persistence.*;
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+import jakarta.persistence.*;
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 
 @Entity
 @Table(name = "ratings")
 public class Ratings {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     public Ratings(int ratingId, int rating, String review, Orders order, Restaurants restaurant) {
 		super();
@@ -79,23 +91,34 @@ public class Ratings {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+	
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     @Column(name = "rating_id")
     private int ratingId;
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     private Orders order;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurants restaurant;
+<<<<<<< HEAD
 =======
     private Orders order; 
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    private Restaurants restaurant; 
+   
+
     
    
     
@@ -157,5 +180,9 @@ public class Ratings {
                 ", review='" + review + '\'' +
                 '}';
     }
+<<<<<<< HEAD
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 }

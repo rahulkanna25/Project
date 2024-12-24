@@ -1,18 +1,34 @@
 package com.service;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
+=======
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 import com.model.Customers;
+
 import com.model.Orders;
 import com.DAO.OrdersDAO; // Import your OrdersDAO
+<<<<<<< HEAD
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+import java.util.List;
+import java.util.Optional;
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 import com.DAO.CustomersDAO;
 import com.DAO.DeliveryDriverDAO;
 import com.DAO.OrdersDAO;
@@ -26,16 +42,23 @@ import com.model.DeliveryDrivers;
 import com.model.Orders;
 import com.model.Restaurants;
 
+<<<<<<< HEAD
 =======
 import java.util.List;
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
 import java.util.Optional;
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 
 @Service
 public class OrdersService {
 
     @Autowired
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     private OrdersDAO ordersDAO;
     
     @Autowired
@@ -55,11 +78,11 @@ public class OrdersService {
 
     public Orders addOrder(Orders order) {
     	
-    Optional <DeliveryDrivers> driver = deliveryDriverDAO.findById(order.getDeliveryDriver().getDriver_id());
+    Optional <DeliveryDrivers> driver = deliveryDriverDAO.findById(order.getDeliveryDriver().getDriverId());
                 if(!driver.isPresent()) {
                 
                 
-                throw new DriverNotFoundException("Driver not found with id: " + order.getDeliveryDriver().getDriver_id());
+                throw new DriverNotFoundException("Driver not found with id: " + order.getDeliveryDriver().getDriverId());
                 }
                    else {
         
@@ -108,6 +131,7 @@ public class OrdersService {
             return ordersDAO.save(order);
         } else {
             throw new OrderNotFoundException("Order with ID " + orderId + " not found.");
+<<<<<<< HEAD
 =======
     private OrdersDAO ordersDAO; 
 
@@ -128,17 +152,25 @@ public class OrdersService {
         } else {
             throw new RuntimeException("Order not found"); // Handle case where order does not exist
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
         }
     }
-
+        
     public void cancelOrder(int orderId) {
         if (ordersDAO.existsById(orderId)) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
             ordersDAO.deleteById(orderId);
         } else {
             throw new OrderNotFoundException("Order with ID " + orderId + " not found.");
         }
     }
+<<<<<<< HEAD
 =======
             ordersDAO.deleteById(orderId); // Delete the order from the database
         } else {
@@ -150,4 +182,11 @@ public class OrdersService {
     	return ordersDAO.findByCustomer_CustomerId(customerId);
     }
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+    public List<Orders> getCustomer(int customerId){
+    	return ordersDAO.findByCustomer_CustomerId(customerId);
+    }
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 }

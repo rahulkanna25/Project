@@ -2,6 +2,11 @@ package com.model;
 
 import java.time.LocalDate;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 import java.util.Date;
 import java.util.List;
 
@@ -9,16 +14,26 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+<<<<<<< HEAD
 =======
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference; 
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference; 
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "orders")
 public class Orders {
+	
+	
+	public Orders() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +42,9 @@ public class Orders {
 
     @Column(name = "order_date", nullable = false)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate orderDate;
 
@@ -34,6 +52,7 @@ public class Orders {
     @Column(name = "order_status", length = 50)
     private String orderStatus;
 
+<<<<<<< HEAD
     
 =======
     private LocalDate orderDate;
@@ -42,29 +61,107 @@ public class Orders {
     private String orderStatus;
 
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
-	@JsonBackReference 
 	private Restaurants restaurant;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     @ManyToOne
     @JoinColumn(name = "driverid")
     private DeliveryDrivers deliveryDriver;
     
     @ManyToOne
     @JoinColumn(name = "customerid")
-    private Customers customer;
+   private Customers customer;
 
     
     
     
     
-    @Override
+    public Restaurants getRestaurant() {
+		return restaurant;
+	}
+
+
+
+	public void setRestaurant(Restaurants restaurant) {
+		this.restaurant = restaurant;
+	}
+
+
+
+	public DeliveryDrivers getDeliveryDriver() {
+		return deliveryDriver;
+	}
+
+
+
+	public void setDeliveryDriver(DeliveryDrivers deliveryDriver) {
+		this.deliveryDriver = deliveryDriver;
+	}
+
+
+
+	public Customers getCustomer() {
+		return customer;
+	}
+
+
+
+	public void setCustomer(Customers customer) {
+		this.customer = customer;
+	}
+
+
+
+	@Override
 	public String toString() {
 		return "Orders [orderId=" + orderId + ", orderDate=" + orderDate + ", orderStatus=" + orderStatus
 				+ ", restaurant=" + restaurant + ", deliveryDrivers=" + deliveryDriver + ", customer=" + customer
 				+ "]";
+	}
+
+
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+
+
+	public LocalDate getOrderDate() {
+		return orderDate;
+	}
+
+
+
+	public void setOrderDate(LocalDate orderDate) {
+		this.orderDate = orderDate;
+	}
+
+
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 
@@ -82,6 +179,7 @@ public class Orders {
 	}
 
 
+<<<<<<< HEAD
 
 =======
 	@ManyToOne
@@ -229,3 +327,6 @@ public class Orders {
 	}
 }
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+}
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6

@@ -27,6 +27,7 @@ public class DeliveryDriverService {
 	@Autowired
 	OrdersDAO  ordersDAO;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 	
@@ -34,6 +35,8 @@ public class DeliveryDriverService {
 	
 	
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 	
 	public List<DeliveryDrivers> getAll(){
 		
@@ -67,6 +70,7 @@ public class DeliveryDriverService {
 		   throw new DriverNotFoundException("No Driver Exists");
 	   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 		   DeliveryDrivers Driver = deliveryDriver.get();   
 	   
@@ -75,16 +79,27 @@ public class DeliveryDriverService {
 
 =======
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+
+		   DeliveryDrivers Driver = deliveryDriver.get();   
+	   
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 	   if(!order.isPresent()) {
 		   
 		   throw new OrderNotFoundException("No Order Exists");
 	   }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 		   
 	   
 	   Orders updatedOrder = order.get();
 	   
 
+<<<<<<< HEAD
 	  
 
 =======
@@ -92,6 +107,10 @@ public class DeliveryDriverService {
 	   Orders updatedOrder = order.get();
 	   DeliveryDrivers Driver = deliveryDriver.get();   
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+	   
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 	   updatedOrder.setDeliveryDriver(Driver);
 	   ordersDAO.save(updatedOrder);    
 	    
@@ -107,10 +126,16 @@ public class DeliveryDriverService {
 		   }
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		List<Orders> ol = ordersDAO.findByDeliveryDriverDriverid(driverId);
 =======
 		List<Orders> ol = ordersDAO.findByDeliveryDriver_DriverId(driverId);
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+		List<Orders> ol = ordersDAO.findByDeliveryDriver_DriverId(driverId);
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 		
 		if(ol.isEmpty()){
 			
@@ -122,6 +147,7 @@ public class DeliveryDriverService {
 	public void updateLocation(int driverId, String driverLocation) {
 		Optional <DeliveryDrivers> deliveryDriver = deliveryDriversDAO.findById(driverId);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		   if(!deliveryDriver.isPresent()) {
 			   
 			   throw new DriverNotFoundException("No Driver Exists");
@@ -130,9 +156,17 @@ public class DeliveryDriverService {
 			   
 			   throw new EmptyListException("No Driver Exists");
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+
+		   if(!deliveryDriver.isPresent()) {
+			   
+			   throw new DriverNotFoundException("No Driver Exists");
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 		   }
 		   DeliveryDrivers Driver = deliveryDriver.get();
 		   Driver.setDriverLocation(driverLocation);
 		   deliveryDriversDAO.save(Driver);	
 	}
 }
+

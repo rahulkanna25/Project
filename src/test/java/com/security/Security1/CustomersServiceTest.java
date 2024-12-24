@@ -1,4 +1,4 @@
-package com.sprint.Project1;
+package com.security.Security1;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -140,18 +140,18 @@ public class CustomersServiceTest {
         orders.add(new Orders());
 
         when(customersDAO.existsById(1)).thenReturn(true);
-        when(ordersDAO.findByCustomerCustomerId(1)).thenReturn(orders);
+        when(ordersDAO.findByCustomer_CustomerId(1)).thenReturn(orders);
 
         List<Orders> result = customersService.getOrdersByCustomerId(1);
 
         assertEquals(1, result.size());
-        verify(ordersDAO, times(1)).findByCustomerCustomerId(1);
+        verify(ordersDAO, times(1)).findByCustomer_CustomerId(1);
     }
 
     @Test
     public void testGetOrdersByCustomerId_WhenNoOrdersExist() {
         when(customersDAO.existsById(1)).thenReturn(true);
-        when(ordersDAO.findByCustomerCustomerId(1)).thenReturn(new ArrayList<>());
+        when(ordersDAO.findByCustomer_CustomerId(1)).thenReturn(new ArrayList<>());
 
         assertThrows(EmptyListException.class, () -> customersService.getOrdersByCustomerId(1));
     }

@@ -35,6 +35,18 @@ public class Customers {
     private List<Restaurants> favoriteRestaurants;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    
+    @ManyToMany
+    @JoinTable(
+        name = "customer_favorite_restaurant", 
+        joinColumns = @JoinColumn(name = "customer_id"), 
+        inverseJoinColumns = @JoinColumn(name = "restaurant_id") 
+    )
+    
+    List<Restaurants> favouriteRestaurants;
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     
     public Customers() {
         super();
@@ -42,14 +54,15 @@ public class Customers {
 
     
     public Customers(int customerId, String customerName, String customerEmail, String customerPhone,
-                     List<DeliveryAddress> deliveryAddresses, List<Orders> orders) {
+                      List<Orders> orders) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
         this.customerPhone = customerPhone;
-        this.deliveryAddresses = deliveryAddresses;
+        
         this.orders = orders;
     }
+<<<<<<< HEAD
 
     
     public int getCustomerId() {
@@ -59,6 +72,10 @@ public class Customers {
     // Getters and Setters
     public Integer getCustomerId() {
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+    public Integer getCustomerId() {
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
         return customerId;
     }
 
@@ -90,7 +107,17 @@ public class Customers {
         this.customerPhone = customerPhone;
     }
 
-    public List<Orders> getOrders() {
+    public List<Restaurants> getFavouriteRestaurants() {
+		return favouriteRestaurants;
+	}
+
+
+	public void setFavouriteRestaurants(List<Restaurants> favouriteRestaurants) {
+		this.favouriteRestaurants = favouriteRestaurants;
+	}
+
+
+	public List<Orders> getOrders() {
         return orders;
     }
 

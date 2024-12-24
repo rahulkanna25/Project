@@ -1,5 +1,6 @@
 package com.service;
 <<<<<<< HEAD
+<<<<<<< HEAD
  
 import java.util.List;
 import java.util.Optional;
@@ -16,13 +17,22 @@ import com.DAO.RestaurantsDAO;
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 
+import com.model.DeliveryAddress;
+
+
+import com.model.MenuItems;
+import com.model.Ratings;
+import com.model.Restaurants;
 import com.DAO.DeliveryAddressDAO;
 import com.DAO.MenuItemsDAO;
 import com.DAO.RatingsDAO;
 import com.DAO.RestaurantsDAO;
 import com.exception.EmptyListException;
 import com.exception.RestaurantNotFoundException;
+<<<<<<< HEAD
 import com.model.DeliveryAddress;
 import com.model.MenuItems;
 import com.model.Ratings;
@@ -30,14 +40,19 @@ import com.model.Restaurants;
  
 =======
 import com.exception.EmptyListException;
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.model.*;
 import java.util.List;
 import java.util.Optional;
+<<<<<<< HEAD
 
 >>>>>>> 8369f0426e4e1a499eb6177aaa8fdcb7ff2c5e53
+=======
+ 
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 @Service
 public class RestaurantsService {
  
@@ -46,6 +61,7 @@ public class RestaurantsService {
 <<<<<<< HEAD
 <<<<<<< HEAD
     
+<<<<<<< HEAD
     
     @Autowired
     private DeliveryAddressDAO deliveryAddressDAO; 
@@ -57,9 +73,16 @@ public class RestaurantsService {
 >>>>>>> 8369f0426e4e1a499eb6177aaa8fdcb7ff2c5e53
     
     @Autowired
+=======
+
+    
+    @Autowired 
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     private RatingsDAO ratingsDAO;
     
+    
     @Autowired
+<<<<<<< HEAD
 <<<<<<< HEAD
     MenuItemsDAO menuItemsDAO;
  
@@ -86,48 +109,70 @@ public class RestaurantsService {
         Optional<Restaurants> restaurant =restaurantsDAO.findById(id);
         if(!restaurant.isPresent()) {
         	throw new RestaurantNotFoundException("No Restaurant with Id "+id+ " found" );
+=======
+    private DeliveryAddressDAO deliveryAddressDAO;
+    
+    @Autowired
+    private MenuItemsDAO menuItemsDAO;
+ 
+
+    public List<Restaurants> getAllRestaurants() {
+        List<Restaurants> restaurantList = restaurantsDAO.findAll();
+        if(restaurantList.isEmpty()) {
+        	throw new EmptyListException("No Restaurants found");
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
         }
-        return restaurant.get() ;
+        return restaurantList;
     }
  
-    public void saveRestaurant(Restaurants restaurant) {
-        restaurantsDAO.save(restaurant);
+    public Restaurants getRestaurantById(int restaurantId) {
+    	Optional<Restaurants> restaurant = restaurantsDAO.findById(restaurantId);
+    	
+    	if(!restaurant.isPresent()) {
+    		throw new RestaurantNotFoundException("Restaurant with Id "+restaurantId+" not found" );
+    	}
+    	return restaurant.get();
     }
  
-    public void updateRestaurant(int id, Restaurants restaurant) {
-        Optional<Restaurants> existingRestaurant = restaurantsDAO.findById(id);
-        if (existingRestaurant.isPresent()) {
-            Restaurants updatedRestaurant = existingRestaurant.get();
-            updatedRestaurant.setRestaurantName(restaurant.getRestaurantName());
-            updatedRestaurant.setRestaurantAddress(restaurant.getRestaurantAddress());
-            updatedRestaurant.setRestaurantPhone(restaurant.getRestaurantPhone());
-            restaurantsDAO.save(updatedRestaurant);
-        }else {
-        	throw new RestaurantNotFoundException("No Restaurant with Id "+id+ " found" );
+    public Restaurants createRestaurant(Restaurants restaurant) {
+        return restaurantsDAO.save(restaurant);
+    }
+ 
+    public Restaurants updateRestaurant(int restaurantId, Restaurants updatedRestaurant) {
+        if (restaurantsDAO.existsById(restaurantId)) {
+            updatedRestaurant.setRestaurantId(restaurantId); 
+            return restaurantsDAO.save(updatedRestaurant);
+        } else {
+            throw new RestaurantNotFoundException("Restaurant not found");
         }
     }
-    public void deleteRestaurant(int id) {
-    	if(restaurantsDAO.existsById(id)) {
-        restaurantsDAO.deleteById(id);
-    }else {
-    	
-    	throw new RestaurantNotFoundException("No Restaurant with Id "+id+ " found" );
-    	
-    }
+ 
+    public void deleteRestaurant(int restaurantId) {
+        if (restaurantsDAO.existsById(restaurantId)) {
+            restaurantsDAO.deleteById(restaurantId);
+        } else {
+            throw new RestaurantNotFoundException("Restaurant not found");
+        }
     }
     
     public List<MenuItems> getMenu(int restaurantId){
-    	  List<MenuItems> Menu = menuItemsDAO.findByRestaurant_RestaurantId(restaurantId);
-    	  
-    	  if(Menu.isEmpty()) {
-    		  throw new EmptyListException("Menu is not available");
-    	  }
-    	  return Menu;
-    		   
-    	   }
+		  List<MenuItems> menu = menuItemsDAO.findByRestaurant_RestaurantId(restaurantId);
+		  
+		  if(menu.isEmpty()) {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
  
+=======
+			  throw new EmptyListException("Menu Not available");
+
+		  }
+		  return menu;
+			   
+		   }
+
+    
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     public List<Ratings> getRatings(int restaurantId){
   	  List<Ratings> Reviews = ratingsDAO.findByRestaurant_restaurantId(restaurantId);
   	  
@@ -137,6 +182,7 @@ public class RestaurantsService {
   	  return Reviews;
   		   
   	   }
+<<<<<<< HEAD
     
     
     public List<DeliveryAddress> getAddresses(int restaurantId){
@@ -219,3 +265,17 @@ public class RestaurantsService {
 }
 
 
+=======
+     
+     
+     public List<DeliveryAddress> getAddresses(int restaurantId){
+  		  List<DeliveryAddress> address = deliveryAddressDAO.findAddressByRestaurantId(restaurantId);
+  		  
+  		  if(address.isEmpty()) {
+  			  throw new EmptyListException("No Address served");
+  		  }
+  		  return address;
+  			   
+  		   }
+} 
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6

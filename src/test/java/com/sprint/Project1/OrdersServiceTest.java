@@ -50,7 +50,7 @@ public class OrdersServiceTest {
     @BeforeEach
     void setup() {
         driver = new DeliveryDrivers();
-        driver.setDriver_id(1);
+        driver.setDriverId(1);
 
         restaurant = new Restaurants();
         restaurant.setRestaurantId(1);
@@ -75,7 +75,7 @@ public class OrdersServiceTest {
         Orders savedOrder = ordersService.addOrder(order);
 
         assertNotNull(savedOrder);
-        assertEquals(1, savedOrder.getDeliveryDriver().getDriver_id());
+        assertEquals(1, savedOrder.getDeliveryDriver().getDriverId());
         assertEquals(1, savedOrder.getRestaurant().getRestaurantId());
         assertEquals(1, savedOrder.getCustomer().getCustomerId());
     }

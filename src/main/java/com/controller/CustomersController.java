@@ -1,14 +1,25 @@
 package com.controller;
+<<<<<<< HEAD
 
 import com.exception.CustomerNotFoundException;
 
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 import com.model.Customers;
 import com.model.Orders;
 import com.model.Ratings;
 import com.model.Restaurants;
 import com.service.CustomersService;
+<<<<<<< HEAD
 import com.service.RatingsService;
 
+=======
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> d33503d368364d1afcb7689016069e81f28e8ae1
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,10 +27,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.model.Customers;
-import com.model.Orders;
-import com.model.Ratings;
-import com.service.CustomersService;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +36,7 @@ import java.util.Optional;
 public class CustomersController {
 
     @Autowired
+<<<<<<< HEAD
 
     private CustomersService customersService;
     
@@ -37,6 +45,17 @@ public class CustomersController {
     @Autowired
     private RatingsService ratingsService;
 
+=======
+<<<<<<< HEAD
+    private CustomersService customersService;
+    
+    
+
+=======
+    private CustomersService customersService; 
+    
+>>>>>>> d33503d368364d1afcb7689016069e81f28e8ae1
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 
     @GetMapping
     public ResponseEntity<List<Customers>> getAllCustomers() {
@@ -46,13 +65,10 @@ public class CustomersController {
 
     @GetMapping("/{customerId}")
     public ResponseEntity<Object> getCustomerById(@PathVariable int customerId) {
-        Optional<Customers> customer = customersService.getCustomerById(customerId);
-        if (customer.isPresent()) {
-            return ResponseEntity.ok(customer.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"code\": \"NOTFOUND\", \"message\": \"Customer not found\"}");
-        }
+        Customers customer = customersService.getCustomerById(customerId);
+        
+            return ResponseEntity.ok(customer);
+
     }
 
     @PutMapping("/{customerId}")
@@ -63,10 +79,11 @@ public class CustomersController {
             return ResponseEntity.ok(updated);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"code\": \"NOTFOUND\", \"message\": \"Customer not found\"}");
+                    .body("Customer not found");
         }
     }
     
+<<<<<<< HEAD
     @GetMapping("/{customerId}/orders")
     public ResponseEntity<?> getOrdersByCustomerId1(@PathVariable int customerId) {
     	 try {
@@ -88,30 +105,28 @@ public class CustomersController {
          }
         
     }
+=======
+   
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
     
     
 
 
     @DeleteMapping("/{customerId}")
     public ResponseEntity<Object> deleteCustomer(@PathVariable int customerId) {
-        try {
+        
             customersService.deleteCustomer(customerId);
-            return ResponseEntity.ok("{\"code\": \"DELETESUCCESS\", \"message\": \"Customer deleted successfully\"}");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"code\": \"DELETEFAIL\", \"message\": \"" + e.getMessage() + "\"}");
-        }
+            return ResponseEntity.ok("Customer deleted successfully\"}");
+        
     }
+
 
     @GetMapping("/{customerId}/orders")
     public ResponseEntity<?> getOrdersByCustomerId(@PathVariable int customerId) {
-    	 try {
+    	 
              List<Orders> ol = customersService.getOrdersByCustomerId(customerId);
              return new ResponseEntity<List<Orders>>(ol,HttpStatus.OK);
-         } catch (RuntimeException e) {
-             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No reviews found");
-         }
-        
+         
     
     }
 
@@ -120,17 +135,7 @@ public class CustomersController {
         List<Ratings> reviews = customersService.getReviewsByCustomer(customerId);
         return ResponseEntity.ok(reviews);
     }
-    @PostMapping("/{customerId}/favorites")
-    public ResponseEntity<String> addFavoriteRestaurant(@PathVariable int customerId, @RequestBody Restaurants restaurant) {
-        try {
-            customersService.addFavoriteRestaurant(customerId, restaurant);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Restaurant added to favorites successfully.");
-        } catch (CustomerNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while adding the restaurant to favorites.");
-        }
-    }
+    
  
     
     @DeleteMapping("/{customerId}/favorites/{restaurantId}")
@@ -141,8 +146,16 @@ public class CustomersController {
     	String response = customersService.removeFavoriteRestaurant(customerId, restaurantId);
         return ResponseEntity.ok(response);
     }
+    
+    
+    @PostMapping("/{customerId}/favorites")
+    public ResponseEntity<?> addFavoriteRestaurant( @PathVariable int customerId, @RequestBody Restaurants restaurant) {
+
+         customersService.addFavoriteRestaurant(customerId, restaurant);
+        return ResponseEntity.ok("Restaurant added");
+    }
+
     }
     
-
   
 

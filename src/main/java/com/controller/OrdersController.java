@@ -3,12 +3,18 @@ package com.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.model.Orders;
 import com.service.OrdersService;
+<<<<<<< HEAD
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +23,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+=======
+
+import java.util.Optional;
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 
 @RestController
 @RequestMapping("/api")
@@ -65,6 +75,7 @@ public class OrdersController {
         
     }
 
+<<<<<<< HEAD
     @PostMapping
     public ResponseEntity<Orders> placeOrder(@RequestBody Orders order) {
         Orders newOrder = ordersService.placeOrder(order);
@@ -104,3 +115,7 @@ public class OrdersController {
         }
     }
 }
+=======
+
+}
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6

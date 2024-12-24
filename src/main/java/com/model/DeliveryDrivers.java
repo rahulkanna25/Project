@@ -1,10 +1,19 @@
 package com.model;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import jakarta.persistence.Entity;
+=======
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity
+;
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+<<<<<<< HEAD
 
 
 
@@ -91,6 +100,9 @@ import jakarta.persistence.Id;
 
 =======
 import jakarta.persistence.*;
+=======
+import jakarta.persistence.Table;
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
 
 @Entity
 @Table(name = "deliverydrivers")
@@ -109,8 +121,15 @@ public class DeliveryDrivers {
 
     @Column(name = "driver_vehicle")
     private String driverVehicle;
+    
+    @Column(name ="driver_location")
+    private String driverLocation;
 
-    public DeliveryDrivers() {}
+    public String getDriverLocation() {
+		return driverLocation;
+	}
+
+	public DeliveryDrivers() {}
 
     public DeliveryDrivers(int driverId, String driverName, String driverPhone, String driverVehicle) {
         this.driverId = driverId;
@@ -156,4 +175,7 @@ public class DeliveryDrivers {
 		
 	}
 }
+<<<<<<< HEAD
 >>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
+=======
+>>>>>>> 9f560c4236d70c1b04558ab1137b582cfefb24b6
