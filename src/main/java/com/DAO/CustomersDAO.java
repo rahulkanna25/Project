@@ -10,6 +10,7 @@ import com.model.*;
 import jakarta.persistence.criteria.Order;
 @Repository
 public interface CustomersDAO extends JpaRepository<Customers, Integer> {
-	
+
 	
 }
+	

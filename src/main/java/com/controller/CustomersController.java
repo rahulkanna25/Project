@@ -1,5 +1,13 @@
 package com.controller;
 
+<<<<<<< HEAD
+=======
+import com.model.Customers;
+import com.model.Orders;
+import com.model.Ratings;
+import com.service.CustomersService;
+import com.service.RatingsService;
+>>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,31 +28,42 @@ import java.util.Optional;
 public class CustomersController {
 
     @Autowired
+<<<<<<< HEAD
     private CustomersService customersService;
     
     
+=======
+    private CustomersService customersService; 
+    @Autowired
+    private RatingsService ratingsService;
+
+>>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
     @GetMapping
-    public List<Customers> getAllCustomers() {
-        return customersService.getAllCustomers();
+    public ResponseEntity<List<Customers>> getAllCustomers() {
+        List<Customers> customers = customersService.getAllCustomers();
+        return ResponseEntity.ok(customers);
     }
 
     @GetMapping("/{customerId}")
-    public ResponseEntity<Customers> getCustomerById(@PathVariable int customerId) {
+    public ResponseEntity<Object> getCustomerById(@PathVariable int customerId) {
         Optional<Customers> customer = customersService.getCustomerById(customerId);
         if (customer.isPresent()) {
             return ResponseEntity.ok(customer.get());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"code\": \"NOTFOUND\", \"message\": \"Customer not found\"}");
         }
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity<Customers> updateCustomer(@PathVariable int customerId, @RequestBody Customers customerDetails) {
+    public ResponseEntity<Object> updateCustomer(@PathVariable int customerId,
+                                                  @RequestBody Customers updatedCustomer) {
         try {
-            Customers updatedCustomer = customersService.updateCustomer(customerId, customerDetails);
-            return ResponseEntity.ok(updatedCustomer);
+            Customers updated = customersService.updateCustomer(customerId, updatedCustomer);
+            return ResponseEntity.ok(updated);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"code\": \"NOTFOUND\", \"message\": \"Customer not found\"}");
         }
     }
     
@@ -74,14 +93,28 @@ public class CustomersController {
 
 
     @DeleteMapping("/{customerId}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable int customerId) {
+    public ResponseEntity<Object> deleteCustomer(@PathVariable int customerId) {
         try {
             customersService.deleteCustomer(customerId);
-            return ResponseEntity.ok("Customer deleted successfully");
+            return ResponseEntity.ok("{\"code\": \"DELETESUCCESS\", \"message\": \"Customer deleted successfully\"}");
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"code\": \"DELETEFAIL\", \"message\": \"" + e.getMessage() + "\"}");
         }
     }
 
-   
+   /* @GetMapping("/{customerId}/orders")
+    public ResponseEntity<List<Orders>> getOrdersByCustomer(@PathVariable int customerId) {
+        List<Orders> orders = customersService.getOrdersByCustomer(customerId);
+        return ResponseEntity.ok(orders);
+    }*/
+
+    @GetMapping("/{customerId}/reviews")
+    public ResponseEntity<List<Ratings>> getReviewsByCustomer(@PathVariable int customerId) {
+        List<Ratings> reviews = customersService.getReviewsByCustomer(customerId);
+        return ResponseEntity.ok(reviews);
+    }
+    
+
+  
 }

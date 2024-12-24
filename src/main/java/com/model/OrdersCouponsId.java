@@ -1,10 +1,12 @@
 package com.model;
 
 import java.io.Serializable;
+
 import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Id;
+
 
 @Embeddable
 public class OrdersCouponsId implements Serializable {
@@ -19,7 +21,6 @@ public class OrdersCouponsId implements Serializable {
     public OrdersCouponsId() {
         super();
     }
-
     
     public OrdersCouponsId(int orderId, int couponId) {
         this.orderId = orderId;
@@ -47,6 +48,8 @@ public class OrdersCouponsId implements Serializable {
     public int hashCode() {
         return Objects.hash(couponId, orderId);
     }
+
+
 
     @Override
     public boolean equals(Object obj) {

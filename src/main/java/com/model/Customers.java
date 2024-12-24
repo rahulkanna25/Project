@@ -1,14 +1,14 @@
 package com.model;
 
-import java.util.List;
 import jakarta.persistence.*;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "customers")
 public class Customers {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
     private int customerId;
 
@@ -22,11 +22,10 @@ public class Customers {
     private String customerPhone;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<DeliveryAddress> deliveryAddresses;
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Orders> orders;
 
+<<<<<<< HEAD
     
     public Customers() {
         super();
@@ -45,10 +44,16 @@ public class Customers {
 
     
     public int getCustomerId() {
+=======
+    public Customers() {}
+
+    // Getters and Setters
+    public Integer getCustomerId() {
+>>>>>>> fcd70ba35319110343160b3229f52423c9f2d447
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
@@ -76,32 +81,11 @@ public class Customers {
         this.customerPhone = customerPhone;
     }
 
-    public List<DeliveryAddress> getDeliveryAddresses() {
-        return deliveryAddresses;
-    }
-
-    public void setDeliveryAddresses(List<DeliveryAddress> deliveryAddresses) {
-        this.deliveryAddresses = deliveryAddresses;
-    }
-
     public List<Orders> getOrders() {
         return orders;
     }
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
-    }
-
-    // toString method
-    @Override
-    public String toString() {
-        return "Customers{" +
-                "customerId=" + customerId +
-                ", customerName='" + customerName + '\'' +
-                ", customerEmail='" + customerEmail + '\'' +
-                ", customerPhone='" + customerPhone + '\'' +
-                ", deliveryAddresses=" + deliveryAddresses +
-                ", orders=" + orders +
-                '}';
     }
 }
