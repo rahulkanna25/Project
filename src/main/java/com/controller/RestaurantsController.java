@@ -1,7 +1,12 @@
 package com.controller;
 
+import com.DAO.MenuItemsDAO;
 import com.DAO.OrdersDAO;
+import com.DAO.RatingsDAO;
+import com.exception.EmptyListException;
 import com.model.DeliveryAddress;
+import com.model.MenuItems;
+import com.model.Ratings;
 import com.model.Restaurants;
 import com.service.RestaurantsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +26,12 @@ public class RestaurantsController {
     
     @Autowired
     private OrdersDAO orderDao;
+    
+    @Autowired
+    private MenuItemsDAO menuItemsDAO;
+    
+    @Autowired
+    private RatingsDAO ratingsDAO;
 
     @GetMapping
     public ResponseEntity<List<Restaurants>> getAllRestaurants() {
@@ -66,6 +77,42 @@ public class RestaurantsController {
                     .body("{\"code\": \"DELETEFAIL\", \"message\": \"" + e.getMessage() + "\"}");
         }
     }
-  
+    @GetMapping("/{restaurantId}/menu")
+    
+    public ResponseEntity<Object> getMenuByRestaurant(@PathVariable int restaurantId) {
+ 
+        return ResponseEntity.ok(restaurantsService.getMenu(restaurantId));
+ 
+    }
+ 
+    @GetMapping("/{restaurantId}/reviews")
+ 
+    public ResponseEntity<Object> getReviewsByRestaurant(@PathVariable int restaurantId) {
+    	
+    	
+    	
+ 
+        return ResponseEntity.ok( restaurantsService.getRatings(restaurantId));
+ 
+    }
+ 
+    @GetMapping("/{restaurantId}/deliveryareas")
+ 
+    public ResponseEntity<Object> getDeliveryAreasByRestaurant(@PathVariable int restaurantId) {
+    	
+   	    
+ 
+        return ResponseEntity.ok(restaurantsService.getAddresses(restaurantId));
+ 
+    }
+ 
+
+	   
+
 
 }
+
+    
+  
+
+

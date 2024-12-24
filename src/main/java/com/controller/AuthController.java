@@ -24,54 +24,45 @@ import com.model.Role;
 @RestController
 @CrossOrigin("*")
 public class AuthController {
-	
-	
+
 	@Autowired
 	DaoAuthenticationProvider provider;
-	
+
 	@Autowired
 	UserDAO userRepository;
-	
-	public AuthController()
-	{
+
+	public AuthController() {
 		System.out.println("controller invoked");
 	}
-  
-	
+
 	@PostMapping("/api/auth")
-	public ResponseEntity<?> authenticate(@RequestBody AuthenticateUser user)
-	{
-		JwtToken jwtToken=new JwtToken();
-		AuthenticationManager manager=new ProviderManager(provider);
-		
-		Authentication authentication=manager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassword()));
-		
-		 if(authentication.isAuthenticated())
-		{
-			 String username=user.getUserName();
-			 String password=user.getPassword();
-			 List<Role> roleList=userRepository.findByUsername(username).get().getRoles();
-    		 System.out.println(user.getRole());
-             ResponseEntity<?> res=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			 for(Role r:roleList)
-		     {
-		    	 if(user.getRole().equals(r.getRole_name()))
-		    	 {
-		    		 System.out.println("Hello");
-		    		 jwtToken.generateToken(username, password,user.getRole());
-					  res= new ResponseEntity<JwtResponse>(new JwtResponse(jwtToken.getToken()),HttpStatus.ACCEPTED);
-		    	 }
-		    
-		    	 return res;
-		    	 
-		     }
-			 return res;
-			 
-		}
-		else
-		{
+	public ResponseEntity<?> authenticate(@RequestBody AuthenticateUser user) {
+		JwtToken jwtToken = new JwtToken();
+		AuthenticationManager manager = new ProviderManager(provider);
+
+		Authentication authentication = manager
+				.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+
+		if (authentication.isAuthenticated()) {
+			String username = user.getUserName();
+			String password = user.getPassword();
+			List<Role> roleList = userRepository.findByUsername(username).get().getRoles();
+			System.out.println(user.getRole());
+			ResponseEntity<?> res = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			for (Role r : roleList) {
+				if (user.getRole().equals(r.getRole_name())) {
+					System.out.println("Hello");
+					jwtToken.generateToken(username, password, user.getRole());
+					res = new ResponseEntity<JwtResponse>(new JwtResponse(jwtToken.getToken()), HttpStatus.ACCEPTED);
+				}
+
+				return res;
+
+			}
+			return res;
+		} else {
 			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
 		}
-	}	
-	
+	}
+
 }
