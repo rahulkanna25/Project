@@ -4,6 +4,8 @@ import com.model.MenuItems;
 import com.model.Restaurants;
 import com.DAO.MenuItemsDAO;
 import com.DAO.RestaurantsDAO;
+import com.exception.EmptyListException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,47 +14,71 @@ import java.util.Optional;
 
 @Service
 public class MenuItemsService {
-
+ 
     @Autowired
     private MenuItemsDAO menuItemsDAO;
-
+ 
     @Autowired
-    private RestaurantsDAO restaurantsDAO; 
-
+    private RestaurantsDAO restaurantsDAO;
+ 
     public List<MenuItems> getMenuItemsByRestaurant(int restaurantId) {
-        return menuItemsDAO.findByRestaurant_RestaurantId(restaurantId);
+ 
+    	Optional<Restaurants> restaurantOptional = restaurantsDAO.findById(restaurantId);
+        if (!restaurantOptional.isPresent()) {
+        	throw new RestaurantNotFoundException("No Restaurant with Id"+restaurantId+ "found" );
+        }else {
+        	
+        	List<MenuItems> ml = menuItemsDAO.findByRestaurant_RestaurantId(restaurantId);
+        	
+        	if(ml.isEmpty()) {
+        		throw new EmptyListException("Menu Not Available");
+        	}
+        	return ml;
+        }
+ 
+        
+ 
     }
-
+ 
     public MenuItems addMenuItem(int restaurantId, MenuItems menuItem) {
         Optional<Restaurants> restaurantOptional = restaurantsDAO.findById(restaurantId);
         if (restaurantOptional.isPresent()) {
-            menuItem.setRestaurant(restaurantOptional.get()); 
+            menuItem.setRestaurant(restaurantOptional.get());
             return menuItemsDAO.save(menuItem);
         } else {
-            throw new RuntimeException("Restaurant not found"); 
+ 
+            throw new RestaurantNotFoundException("No Restaurant with Id"+restaurantId+ "found" );
+ 
         }
     }
-
+ 
    
-    public Optional<MenuItems> getMenuItemById(int itemId) {
-        return menuItemsDAO.findById(itemId);
+ 
+    public MenuItems getMenuItemById(int itemId) {
+        Optional<MenuItems> menu = menuItemsDAO.findById(itemId);
+        if(!menu.isPresent()) {
+        	throw new MenuItemNotFoundException("No Item with ID "+ itemId+ " found");
+        }
+        return menu.get();
     }
-
+   
    
     public MenuItems updateMenuItem(int itemId, MenuItems updatedMenuItem) {
+ 
         if (menuItemsDAO.existsById(itemId)) {
-            updatedMenuItem.setMenuItemId(itemId); 
-            return menuItemsDAO.save(updatedMenuItem); 
+            updatedMenuItem.setMenuItemId(itemId);
+            return menuItemsDAO.save(updatedMenuItem);
         } else {
-            throw new RuntimeException("Menu item not found");
+            throw new MenuItemNotFoundException("Menu item not found");
         }
     }
-
+ 
     public void deleteMenuItem(int itemId) {
         if (menuItemsDAO.existsById(itemId)) {
-            menuItemsDAO.deleteById(itemId); 
-        } else {
-            throw new RuntimeException("Menu item not found"); 
+            menuItemsDAO.deleteById(itemId);
+        }else {
+            throw new MenuItemNotFoundException("Menu item not found");
         }
     }
 }
+ 

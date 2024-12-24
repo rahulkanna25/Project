@@ -30,6 +30,14 @@ public class CustomersService {
     @Autowired
     private OrdersDAO ordersDAO;
 
+    public Customers findById(int id) {
+        return customersDAO.findById(id).orElse(null);
+    }
+
+    public void save(Customers customer) {
+        customersDAO.save(customer);
+    }
+
     public List<Customers> getAllCustomers() {
         return customersDAO.findAll(); 
     }
@@ -85,20 +93,7 @@ public List<Orders> getOrdersByCustomerId(int customerId){
     	return ratingList;
     }
     
-   
-
-        @Autowired
-        private CustomersDAO customerRepository;
-
-        public Customers findById(int id) {
-            return customerRepository.findById(id).orElse(null);
-        }
-
-        public void save(Customers customer) {
-            customerRepository.save(customer);
-        }
-        
-        
+           
         public void addFavoriteRestaurant(int customerId, Restaurants restaurant) {
             
             Optional<Customers> customerOpt = customersDAO.findById(customerId);

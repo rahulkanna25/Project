@@ -6,7 +6,6 @@ import com.model.Orders;
 import com.model.Ratings;
 import com.model.Restaurants;
 import com.service.CustomersService;
-import com.service.RatingsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +21,7 @@ public class CustomersController {
 
     @Autowired
     private CustomersService customersService; 
-    @Autowired
-    private RatingsService ratingsService;
+    
 
     @GetMapping
     public ResponseEntity<List<Customers>> getAllCustomers() {
