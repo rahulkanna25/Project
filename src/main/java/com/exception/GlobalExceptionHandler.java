@@ -1,6 +1,10 @@
 package com.exception;
 
+
 import java.time.LocalDateTime;
+
+
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -56,6 +60,15 @@ public class GlobalExceptionHandler {
 	}
 	@ExceptionHandler(RestaurantNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleException(RestaurantNotFoundException exe)
+	{
+		ErrorResponse err= new ErrorResponse();
+	    err.setTimestamp(LocalDateTime.now());
+		err.setStatus( HttpStatus.NOT_FOUND);
+		err.setMessage( exe.getMessage());
+		return new ResponseEntity<ErrorResponse>(err,HttpStatus.NOT_FOUND);
+	}
+	@ExceptionHandler(MenuItemNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleException(MenuItemNotFoundException exe)
 	{
 		ErrorResponse err= new ErrorResponse();
 	    err.setTimestamp(LocalDateTime.now());

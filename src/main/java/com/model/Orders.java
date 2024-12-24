@@ -37,9 +37,8 @@ public class Orders {
     private String orderStatus;
 
 
-   @ManyToOne
-   @JoinColumn(name = "restaurant_id", nullable = false)
-	@JsonBackReference // Prevent recursion during serialization
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", nullable = false)
 	private Restaurants restaurant;
 
 

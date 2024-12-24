@@ -24,6 +24,15 @@ public class Customers {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Orders> orders;
+    
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "customer_favorites",
+        joinColumns = @JoinColumn(name = "customer_id"),
+        inverseJoinColumns = @JoinColumn(name = "restaurant_id")
+    )
+    private List<Restaurants> favoriteRestaurants;
 
     
     @ManyToMany
@@ -98,5 +107,12 @@ public class Customers {
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
+    }
+    public List<Restaurants> getFavoriteRestaurants() {
+        return favoriteRestaurants;
+    }
+
+    public void setFavoriteRestaurants(List<Restaurants> favoriteRestaurants) {
+        this.favoriteRestaurants = favoriteRestaurants;
     }
 }

@@ -48,7 +48,4 @@ public class OrdersCoupons {
 	public void setCoupons(Coupons coupons) {
 		this.coupons = coupons;
 	}
-
-
-
 }

@@ -1,6 +1,7 @@
 package com.DAO;
 
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +14,7 @@ public interface DeliveryAddressDAO extends JpaRepository<DeliveryAddress,Intege
 	
 	@Query("SELECT d FROM DeliveryAddress d JOIN d.customer c JOIN c.orders o WHERE o.restaurant.restaurantId = :restaurantId")
 	List<DeliveryAddress> findAddressByRestaurantId(@Param("restaurantId")int restaurantId);
+
 
 	
 	

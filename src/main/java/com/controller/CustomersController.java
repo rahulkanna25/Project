@@ -1,6 +1,4 @@
 package com.controller;
-
-
 import com.model.Customers;
 import com.model.Orders;
 import com.model.Ratings;
@@ -24,7 +22,6 @@ import java.util.Optional;
 public class CustomersController {
 
     @Autowired
-
     private CustomersService customersService;
     
     
@@ -38,13 +35,10 @@ public class CustomersController {
 
     @GetMapping("/{customerId}")
     public ResponseEntity<Object> getCustomerById(@PathVariable int customerId) {
-        Optional<Customers> customer = customersService.getCustomerById(customerId);
-        if (customer.isPresent()) {
-            return ResponseEntity.ok(customer.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"code\": \"NOTFOUND\", \"message\": \"Customer not found\"}");
-        }
+        Customers customer = customersService.getCustomerById(customerId);
+        
+            return ResponseEntity.ok(customer);
+
     }
 
     @PutMapping("/{customerId}")
@@ -55,37 +49,32 @@ public class CustomersController {
             return ResponseEntity.ok(updated);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"code\": \"NOTFOUND\", \"message\": \"Customer not found\"}");
+                    .body("Customer not found");
         }
     }
     
-    @GetMapping("/{customerId}/orders")
-    public ResponseEntity<?> getOrdersByCustomerId(@PathVariable int customerId) {
-    	 try {
-             List<Orders> ol = customersService.getOrdersByCustomerId(customerId);
-             return new ResponseEntity<List<Orders>>(ol,HttpStatus.OK);
-         } catch (RuntimeException e) {
-             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No reviews found");
-         }
-        
-    
-    }
+   
     
     
 
 
     @DeleteMapping("/{customerId}")
     public ResponseEntity<Object> deleteCustomer(@PathVariable int customerId) {
-        try {
+        
             customersService.deleteCustomer(customerId);
-            return ResponseEntity.ok("{\"code\": \"DELETESUCCESS\", \"message\": \"Customer deleted successfully\"}");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"code\": \"DELETEFAIL\", \"message\": \"" + e.getMessage() + "\"}");
-        }
+            return ResponseEntity.ok("Customer deleted successfully\"}");
+        
     }
 
-   
+
+    @GetMapping("/{customerId}/orders")
+    public ResponseEntity<?> getOrdersByCustomerId(@PathVariable int customerId) {
+    	 
+             List<Orders> ol = customersService.getOrdersByCustomerId(customerId);
+             return new ResponseEntity<List<Orders>>(ol,HttpStatus.OK);
+         
+    
+    }
 
     @GetMapping("/{customerId}/reviews")
     public ResponseEntity<List<Ratings>> getReviewsByCustomer(@PathVariable int customerId) {
@@ -93,13 +82,7 @@ public class CustomersController {
         return ResponseEntity.ok(reviews);
     }
     
-    @PostMapping("/{customerId}/favorites")
-    public ResponseEntity<?> addFavoriteRestaurant( @PathVariable int customerId, @RequestBody Restaurants restaurant) {
-
-         customersService.addFavoriteRestaurant(customerId, restaurant);
-        return ResponseEntity.ok("Restaurant added");
-    }
-
+ 
     
     @DeleteMapping("/{customerId}/favorites/{restaurantId}")
     public ResponseEntity<String> removeFavoriteRestaurant(
@@ -109,9 +92,16 @@ public class CustomersController {
     	String response = customersService.removeFavoriteRestaurant(customerId, restaurantId);
         return ResponseEntity.ok(response);
     }
+    
+    
+    @PostMapping("/{customerId}/favorites")
+    public ResponseEntity<?> addFavoriteRestaurant( @PathVariable int customerId, @RequestBody Restaurants restaurant) {
+
+         customersService.addFavoriteRestaurant(customerId, restaurant);
+        return ResponseEntity.ok("Restaurant added");
     }
 
+    }
     
-
   
 

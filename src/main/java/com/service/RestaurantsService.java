@@ -1,5 +1,8 @@
 package com.service;
+
 import com.model.DeliveryAddress;
+
+
 import com.model.MenuItems;
 import com.model.Ratings;
 import com.model.Restaurants;
@@ -8,10 +11,10 @@ import com.DAO.MenuItemsDAO;
 import com.DAO.RatingsDAO;
 import com.DAO.RestaurantsDAO;
 import com.exception.EmptyListException;
+import com.exception.RestaurantNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
 import java.util.List;
 import java.util.Optional;
  
@@ -21,6 +24,7 @@ public class RestaurantsService {
     @Autowired
     private RestaurantsDAO restaurantsDAO;
     
+
     
     @Autowired 
     private RatingsDAO ratingsDAO;
@@ -32,12 +36,22 @@ public class RestaurantsService {
     @Autowired
     private MenuItemsDAO menuItemsDAO;
  
+
     public List<Restaurants> getAllRestaurants() {
-        return restaurantsDAO.findAll();
+        List<Restaurants> restaurantList = restaurantsDAO.findAll();
+        if(restaurantList.isEmpty()) {
+        	throw new EmptyListException("No Restaurants found");
+        }
+        return restaurantList;
     }
  
-    public Optional<Restaurants> getRestaurantById(int restaurantId) {
-        return restaurantsDAO.findById(restaurantId);
+    public Restaurants getRestaurantById(int restaurantId) {
+    	Optional<Restaurants> restaurant = restaurantsDAO.findById(restaurantId);
+    	
+    	if(!restaurant.isPresent()) {
+    		throw new RestaurantNotFoundException("Restaurant with Id "+restaurantId+" not found" );
+    	}
+    	return restaurant.get();
     }
  
     public Restaurants createRestaurant(Restaurants restaurant) {
@@ -49,7 +63,7 @@ public class RestaurantsService {
             updatedRestaurant.setRestaurantId(restaurantId); 
             return restaurantsDAO.save(updatedRestaurant);
         } else {
-            throw new RuntimeException("Restaurant not found");
+            throw new RestaurantNotFoundException("Restaurant not found");
         }
     }
  
@@ -57,7 +71,7 @@ public class RestaurantsService {
         if (restaurantsDAO.existsById(restaurantId)) {
             restaurantsDAO.deleteById(restaurantId);
         } else {
-            throw new RuntimeException("Restaurant not found");
+            throw new RestaurantNotFoundException("Restaurant not found");
         }
     }
     
@@ -65,11 +79,14 @@ public class RestaurantsService {
 		  List<MenuItems> menu = menuItemsDAO.findByRestaurant_RestaurantId(restaurantId);
 		  
 		  if(menu.isEmpty()) {
+
 			  throw new EmptyListException("Menu Not available");
+
 		  }
 		  return menu;
 			   
 		   }
+
     
     public List<Ratings> getRatings(int restaurantId){
   	  List<Ratings> Reviews = ratingsDAO.findByRestaurant_restaurantId(restaurantId);
@@ -91,8 +108,4 @@ public class RestaurantsService {
   		  return address;
   			   
   		   }
-  	   
-
- 
-}
-
+} 

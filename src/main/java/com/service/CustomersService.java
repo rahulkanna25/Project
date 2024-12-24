@@ -1,5 +1,6 @@
 package com.service;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -35,16 +36,22 @@ public class CustomersService {
     
     @Autowired
     private RatingsDAO ratingsDAO;
-    @Autowired
-    private OrdersDAO ordersDAO;
-
+    
 
     public List<Customers> getAllCustomers() {
-        return customersDAO.findAll(); 
+        List<Customers> cl = customersDAO.findAll(); 
+        if(cl.isEmpty()) {
+        	throw new EmptyListException("No Customers Found");
+        }
+        return cl;
     }
 
-    public Optional<Customers> getCustomerById(int customerId) {
-        return customersDAO.findById(customerId);
+    public Customers getCustomerById(int customerId) {
+    	Optional<Customers> customer = customersDAO.findById(customerId);
+    	if(!customer.isPresent()) {
+    		throw new CustomerNotFoundException("Customer with ID " + customerId + " not found.");
+    	}
+    	return customer.get();
     }
 
 
@@ -52,6 +59,8 @@ public class CustomersService {
     public void deleteCustomer(int id) {
         if (customersDAO.existsById(id)) {
             customersDAO.deleteById(id);
+        }else {
+        	throw new CustomerNotFoundException("Customer with ID " + id + " not found.");
         }
     }
 
@@ -111,52 +120,56 @@ public class CustomersService {
 	
 	}
 	
-	
+public void addFavoriteRestaurant(int customerId, Restaurants restaurant) {
+        
+        Optional<Customers> customerOpt = customersDAO.findById(customerId);
+        Optional<Restaurants> restaurantOpt = restaurantDAO.findById(restaurant.getRestaurantId());
+        
+        System.out.println("Restaurant ID from request: " + restaurant.getRestaurantId());
+        
 
-	    
-	    public void addFavoriteRestaurant(int customerId, Restaurants restaurant) {
-	        
-	        Optional<Customers> customerOpt = customersDAO.findById(customerId);
-	        
+        if (!customerOpt.isPresent()) {
+        	throw new EmptyListException("Customer not found!");
+        	
+        }
+        if (!restaurantOpt.isPresent()) {
+        	throw new EmptyListException("restaurant not found!");
+        	
+        }else {
+        
+            Customers customer = customerOpt.get();
+            Restaurants restaurantobj  = restaurantOpt.get();
 
-	        if (customerOpt.isPresent()) {
-	            Customers customer = customerOpt.get();
-
-	            customer.getFavouriteRestaurants().add(restaurant);
-	            customersDAO.save(customer); 
-	           
-	            
-	        } else {
-	            throw new CustomerNotFoundException("Customer not found!");
-	        }
-	    }
-
-	    
-	    public String removeFavoriteRestaurant(int customerId, int restaurantId) {
-	        Optional<Customers> customerOpt = customersDAO.findById(customerId);
-	        Optional<Restaurants> restaurantOpt = restaurantDAO.findById(restaurantId);
-
-	        if (customerOpt.isPresent() && restaurantOpt.isPresent()) {
-	            Customers customer = customerOpt.get();
-	            Restaurants restaurant = restaurantOpt.get();
-
-	            
-	            customer.getFavouriteRestaurants().remove(restaurant);
-	            customersDAO.save(customer); 
-
-	            return "Restaurant removed from favorites successfully!";
-	        } else {
-	            throw new CustomerNotFoundException("Customer or Restaurant doesn't exists");
-	        }
-	    }
-	
-
-   
-    
-
-}  
+            customer.getFavouriteRestaurants().add(restaurantobj);
+            customersDAO.save(customer); 
+           
+            
+        } 
+    }
 
     
+    public String removeFavoriteRestaurant(int customerId, int restaurantId) {
+        Optional<Customers> customerOpt = customersDAO.findById(customerId);
+        Optional<Restaurants> restaurantOpt = restaurantDAO.findById(restaurantId);
+
+        if (customerOpt.isPresent() && restaurantOpt.isPresent()) {
+            Customers customer = customerOpt.get();
+            Restaurants restaurant = restaurantOpt.get();
+
+            
+            customer.getFavouriteRestaurants().remove(restaurant);
+            customersDAO.save(customer); 
+
+            return "Restaurant removed from favorites successfully!";
+        } else {
+            throw new EmptyListException("Customer or Restaurant doesn't exists");
+        }
+    }
 
 
+	
+}
 
+	
+
+	

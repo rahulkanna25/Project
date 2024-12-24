@@ -1,11 +1,8 @@
 package com.model;
 
 import jakarta.persistence.*;
-import java.util.List;
-import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.List;
 
 @Entity
 @Table(name = "restaurants")
@@ -32,6 +29,7 @@ public class Restaurants {
 
     
     
+    
     @ManyToOne
     @JoinColumn(name = "delivery_address_id")
     private DeliveryAddress deliveryAddress;
@@ -39,7 +37,7 @@ public class Restaurants {
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Orders> orders;
-
+    
     public Restaurants() {}
 
     // Getters and Setters
@@ -75,9 +73,6 @@ public class Restaurants {
         this.restaurantPhone = restaurantPhone;
     }
 
-    @ManyToMany(mappedBy = "favouriteRestaurants")
-    
-    private List<Customers> customers;
 
     public List<Orders> getOrders() {
         return orders;
