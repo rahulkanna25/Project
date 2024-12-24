@@ -65,7 +65,7 @@ public class RestaurantsService {
 		  List<MenuItems> menu = menuItemsDAO.findByRestaurant_RestaurantId(restaurantId);
 		  
 		  if(menu.isEmpty()) {
-			  throw new EmptyListException("No reviews available");
+			  throw new EmptyListException("Menu Not available");
 		  }
 		  return menu;
 			   
@@ -86,7 +86,7 @@ public class RestaurantsService {
   		  List<DeliveryAddress> address = deliveryAddressDAO.findAddressByRestaurantId(restaurantId);
   		  
   		  if(address.isEmpty()) {
-  			  throw new EmptyListException("No reviews available");
+  			  throw new EmptyListException("No Address served");
   		  }
   		  return address;
   			   

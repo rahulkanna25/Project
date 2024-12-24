@@ -114,7 +114,7 @@ public class CustomersService {
 	
 
 	    
-	    public List<Restaurants> addFavoriteRestaurant(int customerId, Restaurants restaurant) {
+	    public void addFavoriteRestaurant(int customerId, Restaurants restaurant) {
 	        
 	        Optional<Customers> customerOpt = customersDAO.findById(customerId);
 	        
@@ -124,7 +124,7 @@ public class CustomersService {
 
 	            customer.getFavouriteRestaurants().add(restaurant);
 	            customersDAO.save(customer); 
-	            return customer.getFavouriteRestaurants();
+	           
 	            
 	        } else {
 	            throw new CustomerNotFoundException("Customer not found!");

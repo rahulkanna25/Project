@@ -83,7 +83,7 @@ public class Project1Application {
 	                .requestMatchers(HttpMethod.PUT,"/api/manager/register/*").hasRole("ADMIN")
 	                .requestMatchers("/api/user/register").permitAll() 
 	                .requestMatchers(HttpMethod.GET,"/api/restaurants").hasAnyRole("USER","MANAGER")
-	                .requestMatchers(HttpMethod.GET,"/api/restaurants/{restaurantId").hasAnyRole("MANAGER","USER")
+	                .requestMatchers(HttpMethod.GET,"/api/restaurants/{restaurantId}").hasAnyRole("MANAGER","USER")
 	                .requestMatchers(HttpMethod.POST,"/api/restaurants").hasAnyRole("ADMIN","MANAGER")
 		            .requestMatchers(HttpMethod.GET,"/api/restaurants/{restaurantId}/menu").hasAnyRole("MANAGER,USER")
 		            .requestMatchers(HttpMethod.GET,"/api/restaurants/{restaurantId}/reviews").hasAnyRole("ADMIN,USER")

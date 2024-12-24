@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "restaurants")
 public class Restaurants {
@@ -72,7 +75,9 @@ public class Restaurants {
         this.restaurantPhone = restaurantPhone;
     }
 
+    @ManyToMany(mappedBy = "favouriteRestaurants")
     
+    private List<Customers> customers;
 
     public List<Orders> getOrders() {
         return orders;

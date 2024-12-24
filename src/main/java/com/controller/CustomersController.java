@@ -2,12 +2,11 @@ package com.controller;
 
 
 import com.model.Customers;
-
 import com.model.Orders;
 import com.model.Ratings;
 import com.model.Restaurants;
 import com.service.CustomersService;
-import com.service.RatingsService;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,7 @@ public class CustomersController {
 
     private CustomersService customersService;
     
-    @Autowired
-    private RatingsService ratingsService;
+    
 
 
     @GetMapping
@@ -98,8 +96,8 @@ public class CustomersController {
     @PostMapping("/{customerId}/favorites")
     public ResponseEntity<?> addFavoriteRestaurant( @PathVariable int customerId, @RequestBody Restaurants restaurant) {
 
-        List<Restaurants> response = customersService.addFavoriteRestaurant(customerId, restaurant);
-        return ResponseEntity.ok(response);
+         customersService.addFavoriteRestaurant(customerId, restaurant);
+        return ResponseEntity.ok("Restaurant added");
     }
 
     

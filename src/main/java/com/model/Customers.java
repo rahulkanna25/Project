@@ -32,6 +32,7 @@ public class Customers {
         joinColumns = @JoinColumn(name = "customer_id"), 
         inverseJoinColumns = @JoinColumn(name = "restaurant_id") 
     )
+    
     List<Restaurants> favouriteRestaurants;
     
     public Customers() {
@@ -48,10 +49,6 @@ public class Customers {
         
         this.orders = orders;
     }
-
-    
-    
-    // Getters and Setters
     public Integer getCustomerId() {
 
         return customerId;

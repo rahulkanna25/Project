@@ -15,15 +15,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleGenericException(Exception ex) {
-    	
-        Response response = new Response("SERVER_ERROR", "An unexpected error occurred");
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(response);
-    }
-
     
     @ExceptionHandler(DriverNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleException(DriverNotFoundException exe)
