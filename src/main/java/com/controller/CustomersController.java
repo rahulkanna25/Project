@@ -4,8 +4,11 @@ import com.model.Orders;
 import com.model.Ratings;
 import com.model.Restaurants;
 import com.service.CustomersService;
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> d33503d368364d1afcb7689016069e81f28e8ae1
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,10 +25,15 @@ import java.util.Optional;
 public class CustomersController {
 
     @Autowired
+<<<<<<< HEAD
     private CustomersService customersService;
     
     
 
+=======
+    private CustomersService customersService; 
+    
+>>>>>>> d33503d368364d1afcb7689016069e81f28e8ae1
 
     @GetMapping
     public ResponseEntity<List<Customers>> getAllCustomers() {
