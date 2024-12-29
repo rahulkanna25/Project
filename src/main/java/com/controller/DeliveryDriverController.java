@@ -39,14 +39,14 @@ public class DeliveryDriverController {
 		return new ResponseEntity<List<DeliveryDrivers>>(driverList,HttpStatus.OK);
 		
 	}
-	@GetMapping("/api/drivers/{id}")
+	@GetMapping("/api/drivers/{driverId}")
 	public ResponseEntity<?>  getDriver(@PathVariable int driverId) {
 		DeliveryDrivers driver = deliveryDriverService.getDriver(driverId);
 		
 		return new ResponseEntity<DeliveryDrivers>(driver,HttpStatus.OK);
 	}
 	
-	@PutMapping("/api/orders/{orderid}/assignorder/{driverid}")
+	@PutMapping("/api/orders/{orderid}/assignorder/{driverId}")
 	public ResponseEntity<?>  assignOrders(@PathVariable int driverid,@PathVariable int orderid) {
 		
 		  deliveryDriverService.assignOrder(orderid, driverid);

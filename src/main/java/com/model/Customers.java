@@ -28,10 +28,12 @@ public class Customers {
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-        name = "customer_favorites",
+        name = "customer_favorite_restaurant",
         joinColumns = @JoinColumn(name = "customer_id"),
         inverseJoinColumns = @JoinColumn(name = "restaurant_id")
+        
     )
+    
     private List<Restaurants> favoriteRestaurants;
 
     public Customers() {}

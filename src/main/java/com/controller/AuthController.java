@@ -41,10 +41,10 @@ public class AuthController {
 		AuthenticationManager manager = new ProviderManager(provider);
 
 		Authentication authentication = manager
-				.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+				.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
 		if (authentication.isAuthenticated()) {
-			String username = user.getUserName();
+			String username = user.getUsername();
 			String password = user.getPassword();
 			List<Role> roleList = userRepository.findByUsername(username).get().getRoles();
 			System.out.println(user.getRole());

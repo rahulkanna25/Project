@@ -96,7 +96,7 @@ public class RestaurantsController {
  
     }
  
-    @GetMapping("/{restaurantId}/deliveryareas")
+    @GetMapping("/{restaurantId}/delivery-areas")
  
     public ResponseEntity<Object> getDeliveryAreasByRestaurant(@PathVariable int restaurantId) {
     	
